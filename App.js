@@ -4,8 +4,8 @@ import Home from './App/screens/Home';
 import NavBar from './App/assets/component/NavBar';
 import ClassTimeTable from './App/screens/ClassTimeTable';
 const App = () => {
-  // return <Home />;
-  return <ClassTimeTable />;
+  return <Home />;
+  // return <ClassTimeTable />;
   // return <NavBar />;
 };
 const style = StyleSheet.create({

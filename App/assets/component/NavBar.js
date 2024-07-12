@@ -8,26 +8,41 @@ import {
 } from 'react-native';
 import React from 'react';
 
-const NavBar = () => {
-  const themes = useColorScheme();
+const NavBar = props => {
+  const themes = props.data.currentThemes;
   return (
     <View
       style={[
         styles.navBarContiner,
         {backgroundColor: themes == 'dark' ? '#202020' : '#F1F1F1'},
       ]}>
-      <View style={[styles.navBarAlign, {justifyContent: 'flex-start'}]}>
-        <TouchableOpacity>
+      <View
+        style={[
+          styles.navBarAlign,
+          {
+            // justifyContent: 'flex-start',
+            marginLeft: 7,
+            marginRight: 10,
+            // alignItems: 'center',
+            // backgroundColor: 'blue',
+            // borderRadius: 20,
+            paddingTop: 5,
+          },
+        ]}>
+        <TouchableOpacity
+          onPress={() => {
+            console.log(props.data);
+          }}>
           <Image style={styles.logo} source={require('../logo/SSU.png')} />
         </TouchableOpacity>
       </View>
-      <View style={{flex: 2}}>
+      <View style={{flex: 2, backgroundColor: 'pink', borderRadius: 20}}>
         <Text
           style={[
             styles.mainText,
             {color: themes == 'dark' ? '#F1F1F1' : '#893535'},
           ]}>
-          Sri Sri University
+          {props.data.headingText}
         </Text>
         <Text
           style={[
@@ -42,9 +57,19 @@ const NavBar = () => {
           styles.navBarAlign,
           {
             // backgroundColor: 'blue',
+            alignItems: 'flex-end',
+            paddingRight: 5,
           },
         ]}>
         {/* <Text style={{textAlign: 'right'}}>hiii</Text> */}
+        {props.data.backButton ? (
+          <TouchableOpacity>
+            <Image
+              style={{height: 35, width: 35}}
+              source={require('../logo/home.png')}
+            />
+          </TouchableOpacity>
+        ) : null}
       </View>
     </View>
   );

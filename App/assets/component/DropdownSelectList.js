@@ -8,553 +8,9 @@ import {
   FlatList,
   Button,
 } from 'react-native';
+import facultyData from './FacultyData';
 
-const facultyData = [
-  {
-    key: '01',
-    facultyName: 'Faculty Of Architecture',
-    courseNameAndSemester: [
-      {
-        courseName: 'Bachelor of Architecture',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'Bachelor in Interior Design',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-    ],
-  },
-  {
-    key: '02',
-    facultyName: 'Faculty Of Agriculture',
-    courseNameAndSemester: [
-      {
-        courseName: 'B.Sc. (Hons.) Agriculture',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'B.Sc. (Hons.) Horticulture',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'B.Sc. (Hons.) Agribusiness',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'B.Sc. (Hons.) Food, Nutrition and Dietetics',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'M.Sc. Agronomy',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'M.Sc. Entomology',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'M.Sc. Horticulture',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'M.Sc. Statistics',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'M.Sc. Agricultural Economics',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'M.Sc. Agricultural Extension',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'M.Sc. Genetics and Plant Breeding',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'M.Sc. Plant Pathology',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'M.Sc. Soil Science and Agricultural Chemistry',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-    ],
-  },
-  {
-    key: '03',
-    facultyName: 'Faculty of Management Studies',
-    courseNameAndSemester: [
-      {
-        courseName: 'BBA',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          //   '7th Semester',
-          //   '8th Semester',
-        ],
-      },
-      {
-        courseName: 'B.Com (Hons.)',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-        ],
-      },
-      {
-        courseName: 'MBA (General Management)',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-        ],
-      },
-      {
-        courseName: 'MBA (Agribusiness)',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-        ],
-      },
-    ],
-  },
-  {
-    key: '04',
-    facultyName: 'Faculty of Arts, Communication & Indic Studies',
-    courseNameAndSemester: [
-      {
-        courseName: 'B.A. (Hons.) English',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'MA (English)',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-        ],
-      },
-      {
-        courseName: 'BFA Animation',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'BFA Applied Arts',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'BFA Painting',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'Bachelor of Performing Arts (Odissi Dance)',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'M.P.A. (Odissi Dance)',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'Bachelor of Performing Arts (Hindustani Vocal Music)',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'M.A. in Hindu Studies',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          //   '5th Semester',
-          //   '6th Semester',
-          //   '7th Semester',
-          //   '8th Semester',
-        ],
-      },
-      {
-        courseName: 'MA (Sanskrit)',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          //   '5th Semester',
-          //   '6th Semester',
-          //   '7th Semester',
-          //   '8th Semester',
-        ],
-      },
-    ],
-  },
-  {
-    key: '05',
-    facultyName: 'Faculty of Health & Wellness',
-    courseNameAndSemester: [
-      {
-        courseName: 'BSc Osteopathy',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'MSc Osteopathy',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'Integrated M.Sc. in Osteopathy',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'BSc Yoga',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'Bachelor of Naturopathy and Yogic Science (BNYS)',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'MSc (Yoga)',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'BSc Nursing',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'General Nursing and Midwifery',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'Bachelor of Physical Education and Sports (BPES)',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'Bachelor of Physiotherapy (BPT)',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-      {
-        courseName: 'MSc Exercise and Sports Physiology (MESP)',
-        semester: [
-          '1st Semester',
-          '2nd Semester',
-          '3rd Semester',
-          '4th Semester',
-          '5th Semester',
-          '6th Semester',
-          '7th Semester',
-          '8th Semester',
-        ],
-      },
-    ],
-  },
-
-  // Add more faculties if needed
-];
-
-const DropdownSelectList = () => {
+const DropdownSelectList = props => {
   const [selectedFacultyName, setSelectedFacultyName] = useState(
     'Select your faculty name',
   );
@@ -563,8 +19,8 @@ const DropdownSelectList = () => {
   const [isClickedCourse, setIsClickedCourse] = useState(false);
   const [selectedSemester, setSelectedSemester] = useState();
   const [isClickedSemester, setIsClickedSemester] = useState(false);
-  const [courseData, setCourseData] = useState([null]);
-  const [semesterData, setSemesterData] = useState([null]);
+  const [courseData, setCourseData] = useState();
+  const [semesterData, setSemesterData] = useState();
 
   const facultiesFunction = item => {
     console.log(item.item.facultyName);
@@ -585,7 +41,7 @@ const DropdownSelectList = () => {
     // console.log(courseData);
   };
   return (
-    <View>
+    <View style={{marginTop: 10}}>
       <TouchableOpacity
         style={styles.dropDownStyle}
         onPress={() => {
@@ -630,22 +86,35 @@ const DropdownSelectList = () => {
       </TouchableOpacity>
       {isClickedCourse ? (
         <View style={styles.dropDownArea}>
-          <FlatList
-            data={courseData}
-            renderItem={(item, index) => {
-              return (
-                <TouchableOpacity
-                  style={styles.dropDownAreaText}
-                  onPress={() => {
-                    courseFunction(item);
-                  }}>
-                  <Text style={styles.placeholderText}>
-                    {item.item.courseName}
-                  </Text>
-                </TouchableOpacity>
-              );
-            }}
-          />
+          {!courseData ? (
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 15,
+                color: 'red',
+                paddingTop: 30,
+              }}>
+              Please select faculty first
+            </Text>
+          ) : (
+            <FlatList
+              data={courseData}
+              renderItem={(item, index) => {
+                // console.log(courseData + '===============');
+                return (
+                  <TouchableOpacity
+                    style={styles.dropDownAreaText}
+                    onPress={() => {
+                      courseFunction(item);
+                    }}>
+                    <Text style={styles.placeholderText}>
+                      {item.item.courseName}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              }}
+            />
+          )}
         </View>
       ) : null}
       {/* semester drop down */}
@@ -684,6 +153,13 @@ const DropdownSelectList = () => {
                       console.log(item);
 
                       setIsClickedSemester(false);
+                      props.dropdowninfo(
+                        selectedFacultyName +
+                          '**' +
+                          selectedCourse +
+                          '**' +
+                          item,
+                      );
                     }}>
                     <Text style={styles.placeholderText}>{item}</Text>
                   </TouchableOpacity>
@@ -693,13 +169,6 @@ const DropdownSelectList = () => {
           )}
         </View>
       ) : null}
-
-      <Button
-        title="hiiii"
-        onPress={() => {
-          console.log(courseData);
-        }}
-      />
     </View>
   );
 };
@@ -714,6 +183,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     marginBottom: 15,
+    elevation: 5,
+    backgroundColor: 'white',
   },
   placeholderText: {
     fontSize: 20,
@@ -728,7 +199,10 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     alignSelf: 'center',
     marginTop: 10,
-    // elevation: 5,
+    elevation: 5,
+    backgroundColor: 'white',
+
+    marginBottom: 10,
   },
   dropDownAreaText: {
     height: 50,

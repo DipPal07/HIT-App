@@ -24,7 +24,13 @@ const Home = () => {
             styles.background,
             {backgroundColor: themes == 'dark' ? '#2E2D2D' : '#FCFCFC'},
           ]}>
-          <NavBar />
+          <NavBar
+            data={{
+              backButton: false,
+              currentThemes: themes,
+              headingText: 'Sri Sri University',
+            }}
+          />
 
           <NewsAndEvent />
           <StudentsHelp />
