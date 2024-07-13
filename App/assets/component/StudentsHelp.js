@@ -84,7 +84,10 @@ const StudentsHelp = ({navigation}) => {
           {/* <View
             style={[styles.imageAndTextContainer, {alignItems: 'flex-start'}]}> */}
           <TouchableOpacity
-            style={[styles.imageAndTextContainer, {alignItems: 'flex-start'}]}>
+            style={[styles.imageAndTextContainer, {alignItems: 'flex-start'}]}
+            onPress={() => {
+              navigation.navigate('ScholarshipAndJob', {themes: themes});
+            }}>
             <Image source={require('../logo/job.png')} style={styles.icon} />
             <Text style={[styles.text, {color: textColor}]}>
               Scholarship & Job

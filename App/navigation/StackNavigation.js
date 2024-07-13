@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../screens/Home';
 import ClassTimeTable from '../screens/ClassTimeTable';
 import Syllabus from '../screens/Syllabus';
+import ScholarshipAndJob from '../screens/ScholarshipAndJob';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,9 +22,15 @@ const StackNavigation = () => {
           component={ClassTimeTable}
           options={{headerShown: false}}
         />
+
         <Stack.Screen
           name="Syllabus"
           component={Syllabus}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ScholarshipAndJob"
+          component={ScholarshipAndJob}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
