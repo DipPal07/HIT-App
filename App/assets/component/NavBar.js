@@ -7,9 +7,11 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 const NavBar = props => {
   const themes = props.data.currentThemes;
+  const navigation = useNavigation();
   return (
     <View
       style={[
@@ -26,7 +28,7 @@ const NavBar = props => {
             // alignItems: 'center',
             // backgroundColor: 'blue',
             // borderRadius: 20,
-            paddingTop: 5,
+            // paddingTop: 5,
           },
         ]}>
         <TouchableOpacity
@@ -36,7 +38,12 @@ const NavBar = props => {
           <Image style={styles.logo} source={require('../logo/SSU.png')} />
         </TouchableOpacity>
       </View>
-      <View style={{flex: 2, backgroundColor: 'pink', borderRadius: 20}}>
+      <View
+        style={{
+          flex: 2,
+          backgroundColor: themes == 'dark' ? '#682F2F' : 'pink',
+          borderRadius: 20,
+        }}>
         <Text
           style={[
             styles.mainText,
@@ -63,7 +70,11 @@ const NavBar = props => {
         ]}>
         {/* <Text style={{textAlign: 'right'}}>hiii</Text> */}
         {props.data.backButton ? (
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Home');
+              console.log('dip');
+            }}>
             <Image
               style={{height: 35, width: 35}}
               source={require('../logo/home.png')}

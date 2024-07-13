@@ -11,7 +11,7 @@ import NavBar from '../assets/component/NavBar';
 import Testing from '../assets/component/Testing';
 import Button from '../assets/component/Button';
 
-const ClassTimeTable = () => {
+const Syllabus = () => {
   const themes = useColorScheme();
   const [dropDownData, setDropSownData] = useState();
   const dropdownListDataHandel = data => {
@@ -27,7 +27,7 @@ const ClassTimeTable = () => {
         data={{
           backButton: true,
           currentThemes: themes,
-          headingText: 'Class Time Table',
+          headingText: 'Syllabus',
         }}
       />
 
@@ -38,6 +38,6 @@ const ClassTimeTable = () => {
   );
 };
 
-export default ClassTimeTable;
+export default Syllabus;
 
 const styles = StyleSheet.create({});

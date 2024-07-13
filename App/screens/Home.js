@@ -13,7 +13,7 @@ import StudentsHelp from '../assets/component/StudentsHelp';
 import Placement from '../assets/component/Placement';
 import AboutUs from '../assets/component/AboutUs';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const themes = useColorScheme();
 
   return (
@@ -33,7 +33,7 @@ const Home = () => {
           />
 
           <NewsAndEvent />
-          <StudentsHelp />
+          <StudentsHelp navigation={navigation} />
           <Placement />
           <AboutUs />
           {/* <Text>home</Text> */}

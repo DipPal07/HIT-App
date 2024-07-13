@@ -1,7 +1,16 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {Image, StyleSheet, Text, useColorScheme, View} from 'react-native';
+import {
+  Image,
+  Linking,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+} from 'react-native';
 
-const StudentsHelp = () => {
+const StudentsHelp = ({navigation}) => {
   const themes = useColorScheme();
   console.log(themes);
   const textColor = themes == 'dark' ? '#F1F1F1' : '#202020';
@@ -9,10 +18,23 @@ const StudentsHelp = () => {
   return (
     <View>
       <Text style={[styles.headingText, {color: textColor}]}>Student Help</Text>
-      <View>
+      <View
+        style={{
+          paddingTop: 5,
+          backgroundColor: '#FFF4F4',
+          margin: 10,
+          borderRadius: 20,
+          elevation: 10,
+        }}>
         <View style={[styles.rowStyle, {}]}>
-          <View
-            style={[styles.imageAndTextContainer, {alignItems: 'flex-start'}]}>
+          {/* <View
+            style={[styles.imageAndTextContainer, {alignItems: 'flex-start'}]}> */}
+          <TouchableOpacity
+            style={[styles.imageAndTextContainer, {alignItems: 'flex-start'}]}
+            onPress={() => {
+              // navigation.navigate('ClassTimeTable');
+              navigation.navigate('ClassTimeTable');
+            }}>
             <Image
               source={require('../logo/schedule.png')}
               style={styles.icon}
@@ -20,37 +42,58 @@ const StudentsHelp = () => {
             <Text style={[styles.text, {color: textColor}]}>
               Class Time Table
             </Text>
-          </View>
-          <View style={[styles.imageAndTextContainer, {alignItems: 'center'}]}>
+          </TouchableOpacity>
+          {/* </View> */}
+          {/* <View style={[styles.imageAndTextContainer, {alignItems: 'center'}]}> */}
+          <TouchableOpacity
+            style={[styles.imageAndTextContainer, {alignItems: 'center'}]}
+            onPress={() => {
+              // navigation.navigate('ClassTimeTable');
+              navigation.navigate('Syllabus');
+            }}>
             <Image
               source={require('../logo/syllabus.png')}
               style={styles.icon}
             />
             <Text style={[styles.text, {color: textColor}]}>Syllabus</Text>
-          </View>
-          <View
-            style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}>
+          </TouchableOpacity>
+          {/* </View> */}
+          {/* <View
+            style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}> */}
+          <TouchableOpacity
+            style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}
+            onPress={() => {
+              Linking.openURL('https://srisriuniversity.edu.in/');
+            }}>
             <Image
               source={require('../logo/website.png')}
               style={styles.icon}
             />
             <Text style={[styles.text, {color: textColor}]}>Our Website</Text>
-          </View>
-          <View
+          </TouchableOpacity>
+          {/* </View> */}
+          {/* <View style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}> */}
+          <TouchableOpacity
             style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}>
             <Image source={require('../logo/Notice.png')} style={styles.icon} />
             <Text style={[styles.text, {color: textColor}]}>Notice Board</Text>
-          </View>
+          </TouchableOpacity>
+          {/* </View> */}
         </View>
         <View style={styles.rowStyle}>
-          <View
+          {/* <View
+            style={[styles.imageAndTextContainer, {alignItems: 'flex-start'}]}> */}
+          <TouchableOpacity
             style={[styles.imageAndTextContainer, {alignItems: 'flex-start'}]}>
             <Image source={require('../logo/job.png')} style={styles.icon} />
             <Text style={[styles.text, {color: textColor}]}>
               Scholarship & Job
             </Text>
-          </View>
-          <View style={[styles.imageAndTextContainer, {alignItems: 'center'}]}>
+          </TouchableOpacity>
+          {/* </View> */}
+          {/* <View style={[styles.imageAndTextContainer, {alignItems: 'center'}]}> */}
+          <TouchableOpacity
+            style={[styles.imageAndTextContainer, {alignItems: 'center'}]}>
             <Image
               source={require('../logo/Creativity.png')}
               style={styles.icon}
@@ -58,16 +101,22 @@ const StudentsHelp = () => {
             <Text style={[styles.text, {color: textColor}]}>
               Students Creativity
             </Text>
-          </View>
-          <View
+          </TouchableOpacity>
+          {/* </View> */}
+          {/* <View
+            style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}> */}
+          <TouchableOpacity
             style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}>
             <Image
               source={require('../logo/attendence.png')}
               style={styles.icon}
             />
             <Text style={[styles.text, {color: textColor}]}>attendance</Text>
-          </View>
-          <View
+          </TouchableOpacity>
+          {/* </View> */}
+          {/* <View
+            style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}> */}
+          <TouchableOpacity
             style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}>
             <Image
               source={require('../logo/library.png')}
@@ -76,7 +125,8 @@ const StudentsHelp = () => {
             <Text style={[styles.text, {color: textColor}]}>
               Library Information
             </Text>
-          </View>
+          </TouchableOpacity>
+          {/* </View> */}
         </View>
       </View>
     </View>
@@ -89,10 +139,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
     marginTop: 10,
+    paddingLeft: 10,
   },
   icon: {
-    height: 60,
-    width: 60,
+    height: 50,
+    width: 50,
     alignSelf: 'center',
   },
   rowStyle: {

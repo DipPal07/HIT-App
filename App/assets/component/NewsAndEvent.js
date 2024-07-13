@@ -16,9 +16,9 @@ const NewsAndEvent = () => {
   const width = Dimensions.get('window').width;
   const newsAndEventData = [
     {id: 1, image: require('../newsAndEventImage/1.jpg')},
-    {id: 1, image: require('../newsAndEventImage/2.jpeg')},
-    {id: 1, image: require('../newsAndEventImage/3.jpeg')},
-    {id: 1, image: require('../newsAndEventImage/4.png')},
+    {id: 2, image: require('../newsAndEventImage/2.jpeg')},
+    {id: 3, image: require('../newsAndEventImage/3.jpeg')},
+    {id: 4, image: require('../newsAndEventImage/4.png')},
   ];
   const themes = useColorScheme();
   const renderItem = ({item, index}) => {
@@ -54,7 +54,7 @@ const NewsAndEvent = () => {
         scrollAnimationDuration={1000}
         mode="parallax"
         // parallax
-        onSnapToItem={index => console.log('current index:', index)}
+        // onSnapToItem={index => console.log('current index:', index)}
         renderItem={renderItem}
       />
     </View>
@@ -68,10 +68,11 @@ const styles = StyleSheet.create({
     height: 400,
     width: 400,
     borderRadius: 10,
-    margin: 2,
+    // margin: 2,
   },
   headingText: {
     fontSize: 20,
     fontWeight: '500',
+    paddingLeft: 10,
   },
 });
