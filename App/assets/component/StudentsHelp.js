@@ -96,7 +96,10 @@ const StudentsHelp = ({navigation}) => {
           {/* </View> */}
           {/* <View style={[styles.imageAndTextContainer, {alignItems: 'center'}]}> */}
           <TouchableOpacity
-            style={[styles.imageAndTextContainer, {alignItems: 'center'}]}>
+            style={[styles.imageAndTextContainer, {alignItems: 'center'}]}
+            onPress={() => {
+              navigation.navigate('StudentsCreativity', {themes: themes});
+            }}>
             <Image
               source={require('../logo/Creativity.png')}
               style={styles.icon}

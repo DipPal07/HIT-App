@@ -5,6 +5,7 @@ import Home from '../screens/Home';
 import ClassTimeTable from '../screens/ClassTimeTable';
 import Syllabus from '../screens/Syllabus';
 import ScholarshipAndJob from '../screens/ScholarshipAndJob';
+import StudentsCreativity from '../screens/StudentsCreativity';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,11 @@ const StackNavigation = () => {
         <Stack.Screen
           name="ScholarshipAndJob"
           component={ScholarshipAndJob}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="StudentsCreativity"
+          component={StudentsCreativity}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
