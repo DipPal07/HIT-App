@@ -11,8 +11,9 @@ import React, {useEffect, useState} from 'react';
 import NavBar from '../assets/component/NavBar';
 
 import StudentsCreativityData from '../assets/component/StudentsCreativityData';
+import NoticeData from '../assets/component/NoticeData';
 
-const StudentsCreativity = ({route, navigation}) => {
+const NoticeBoard = ({route, navigation}) => {
   const themes = JSON.stringify(route.params);
   console.log(themes);
   const width = Dimensions.get('window').width;
@@ -24,11 +25,11 @@ const StudentsCreativity = ({route, navigation}) => {
         data={{
           backButton: true,
           currentThemes: themes,
-          headingText: 'Students Creativity',
+          headingText: 'Notice Board',
         }}
       />
       <FlatList
-        data={StudentsCreativityData}
+        data={NoticeData}
         renderItem={(item, index) => {
           return (
             <View style={styles.cardStyle}>
@@ -58,25 +59,11 @@ const StudentsCreativity = ({route, navigation}) => {
                     height: width - 30,
 
                     alignSelf: 'center',
-                    borderRadius: 10,
+                    borderRadius: 15,
+
                     // margin: 15,
                   }}
                 />
-              </View>
-
-              <View style={{margin: 8}}>
-                <Text style={{}}>{item.item.name}</Text>
-                <Text style={{color: 'black'}}>{item.item.stream}</Text>
-                <Text
-                  style={{
-                    backgroundColor: '#E1ECEB',
-                    padding: 8,
-                    // paddingHorizontal: 10,
-                    borderRadius: 10,
-                    // paddingBottom: 10,
-                  }}>
-                  {item.item.description}
-                </Text>
               </View>
             </View>
           );
@@ -86,7 +73,7 @@ const StudentsCreativity = ({route, navigation}) => {
   );
 };
 
-export default StudentsCreativity;
+export default NoticeBoard;
 
 const styles = StyleSheet.create({
   cardStyle: {
@@ -98,6 +85,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     elevation: 10,
     marginTop: 20,
+    paddingBottom: 10,
     // flex: 1,
   },
 });

@@ -74,7 +74,10 @@ const StudentsHelp = ({navigation}) => {
           {/* </View> */}
           {/* <View style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}> */}
           <TouchableOpacity
-            style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}>
+            style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}
+            onPress={() => {
+              navigation.navigate('NoticeBoard', {themes: themes});
+            }}>
             <Image source={require('../logo/Notice.png')} style={styles.icon} />
             <Text style={[styles.text, {color: textColor}]}>Notice Board</Text>
           </TouchableOpacity>
@@ -112,12 +115,13 @@ const StudentsHelp = ({navigation}) => {
           {/* <View
             style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}> */}
           <TouchableOpacity
-            style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}>
-            <Image
-              source={require('../logo/attendence.png')}
-              style={styles.icon}
-            />
-            <Text style={[styles.text, {color: textColor}]}>attendance</Text>
+            style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}
+            onPress={() => {
+              // Linking.openURL('https://srisriuniversity.edu.in/result/');
+              navigation.navigate('ReportCard', {themes: themes});
+            }}>
+            <Image source={require('../logo/result.png')} style={styles.icon} />
+            <Text style={[styles.text, {color: textColor}]}>Report Card</Text>
           </TouchableOpacity>
           {/* </View> */}
           {/* <View
@@ -134,6 +138,17 @@ const StudentsHelp = ({navigation}) => {
           </TouchableOpacity>
           {/* </View> */}
         </View>
+        {/* <View style={styles.rowStyle}>
+          
+          <TouchableOpacity
+            style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}>
+            <Image
+              source={require('../logo/attendence.png')}
+              style={styles.icon}
+            />
+            <Text style={[styles.text, {color: textColor}]}>attendance</Text>
+          </TouchableOpacity>
+        </View> */}
       </View>
     </View>
   );
