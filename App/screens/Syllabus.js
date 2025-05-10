@@ -37,7 +37,7 @@ const Syllabus = () => {
         <View style={{top: '15%'}}>
           <DropdownSelectList dropdowninfo={dropdownListDataHandel} />
           <Button data={{title: 'Search'}} onPress={buttonHandel} />
-          <Text>{dropDownData ? dropDownData : ''}</Text>
+          {/* <Text>{dropDownData ? dropDownData : ''}</Text> */}
         </View>
       </ImageBackground>
     </View>

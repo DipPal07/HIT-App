@@ -8,6 +8,7 @@ import ScholarshipAndJob from '../screens/ScholarshipAndJob';
 import StudentsCreativity from '../screens/StudentsCreativity';
 import NoticeBoard from '../screens/NoticeBoard';
 import ReportCard from '../screens/ReportCard';
+import SeePdf from '../screens/SeePdf';
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +50,11 @@ const StackNavigation = () => {
         <Stack.Screen
           name="ReportCard"
           component={ReportCard}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="SeePdf"
+          component={SeePdf}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

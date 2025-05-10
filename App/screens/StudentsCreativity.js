@@ -16,6 +16,7 @@ const StudentsCreativity = ({route, navigation}) => {
   const themes = JSON.stringify(route.params);
   console.log(themes);
   const width = Dimensions.get('window').width;
+  const height = Dimensions.get('window').height;
   // const height = Dimensions.get('window').height;
 
   return (
@@ -82,6 +83,24 @@ const StudentsCreativity = ({route, navigation}) => {
           );
         }}
       />
+      <View
+        style={{
+          backgroundColor: 'white',
+          height: 50,
+          width: 50,
+          borderRadius: 25,
+          position: 'absolute',
+
+          right: 10,
+          bottom: 10,
+          elevation: 5,
+        }}>
+        <Image
+          source={require('../assets/logo/add.png')}
+          style={{height: 50, width: 50}}
+        />
+        {/* <Text>fii</Text> */}
+      </View>
     </View>
   );
 };

@@ -9,7 +9,7 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 
 const NewsAndEvent = () => {
@@ -23,6 +23,8 @@ const NewsAndEvent = () => {
   const themes = useColorScheme();
   const renderItem = ({item, index}) => {
     console.log(item.image);
+
+    // const [currentIndex, setCurrentIndex] = useState(0);
     return (
       // <TouchableOpacity>
       <Image source={item.image} style={styles.newsAndEventImage} />
@@ -44,6 +46,10 @@ const NewsAndEvent = () => {
         renderItem={renderItem}
         horizontal={true}
         pagingEnabled={true}
+        showsHorizontalScrollIndicator={false}
+        onScroll={e => {
+          const x = e.nativeEvent.contentOffset.x;
+        }}
       /> */}
       <Carousel
         loop
@@ -53,10 +59,32 @@ const NewsAndEvent = () => {
         data={newsAndEventData}
         scrollAnimationDuration={1000}
         mode="parallax"
+        // pagingEnabled={true}
+        // snapEnabled={true}
         // parallax
         // onSnapToItem={index => console.log('current index:', index)}
         renderItem={renderItem}
       />
+      {/* <View
+        style={{
+          flexDirection: 'row',
+          width: width,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        {newsAndEventData.map((item, index) => {
+          return (
+            <View
+              style={{
+                height: 8,
+                width: 8,
+                borderRadius: 4,
+                backgroundColor: 'red',
+                marginLeft: 5,
+              }}></View>
+          );
+        })}
+      </View> */}
     </View>
   );
 };

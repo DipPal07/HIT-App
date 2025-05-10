@@ -12,7 +12,7 @@ import NavBar from '../assets/component/NavBar';
 import Testing from '../assets/component/Testing';
 import Button from '../assets/component/Button';
 
-const ClassTimeTable = () => {
+const ClassTimeTable = ({navigation}) => {
   const themes = useColorScheme();
   const [dropDownData, setDropSownData] = useState();
   const dropdownListDataHandel = data => {
@@ -20,6 +20,9 @@ const ClassTimeTable = () => {
     setDropSownData(data);
   };
   const buttonHandel = () => {
+    navigation.navigate('SeePdf', {
+      data: dropDownData,
+    });
     console.log('button pressed....');
   };
   return (
@@ -37,7 +40,7 @@ const ClassTimeTable = () => {
         <View style={{top: '15%'}}>
           <DropdownSelectList dropdowninfo={dropdownListDataHandel} />
           <Button data={{title: 'Search'}} onPress={buttonHandel} />
-          <Text>{dropDownData ? dropDownData : ''}</Text>
+          {/* <Text>{dropDownData ? dropDownData : ''}</Text> */}
         </View>
       </ImageBackground>
     </View>

@@ -11,7 +11,7 @@ import {
 import facultyData from './FacultyData';
 
 const DropdownSelectList = props => {
-  const [selectedFacultyName, setSelectedFacultyName] = useState(
+  const [selectedCourseType, setSelectedCourseType] = useState(
     'Select your faculty name',
   );
   const [isClicked, setIsClicked] = useState(false);
@@ -23,8 +23,7 @@ const DropdownSelectList = props => {
   const [semesterData, setSemesterData] = useState();
 
   const facultiesFunction = item => {
-    console.log(item.item.facultyName);
-    setSelectedFacultyName(item.item.facultyName);
+    setSelectedCourseType(item.item.courseType);
     setIsClicked(false);
     setCourseData(item.item.courseNameAndSemester);
     setSelectedCourseName('');
@@ -49,7 +48,7 @@ const DropdownSelectList = props => {
           setIsClickedCourse(false);
           setIsClickedSemester(false);
         }}>
-        <Text style={styles.placeholderText}>{selectedFacultyName}</Text>
+        <Text style={styles.placeholderText}>{selectedCourseType}</Text>
       </TouchableOpacity>
       {isClicked ? (
         <View style={styles.dropDownArea}>
@@ -64,7 +63,7 @@ const DropdownSelectList = props => {
                     // console.log(courseData);
                   }}>
                   <Text style={styles.placeholderText}>
-                    {item.item.facultyName}
+                    {item.item.courseType}
                   </Text>
                 </TouchableOpacity>
               );
@@ -154,11 +153,12 @@ const DropdownSelectList = props => {
 
                       setIsClickedSemester(false);
                       props.dropdowninfo(
-                        selectedFacultyName +
-                          '**' +
-                          selectedCourse +
-                          '**' +
-                          item,
+                        {semester: item, courseName: selectedCourse},
+                        // selectedCourseType +
+                        //   '**' +
+                        //   selectedCourse +
+                        //   '**' +
+                        //   item,
                       );
                     }}>
                     <Text style={styles.placeholderText}>{item}</Text>

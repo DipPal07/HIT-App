@@ -33,7 +33,7 @@ const StudentsHelp = ({navigation}) => {
             style={[styles.imageAndTextContainer, {alignItems: 'flex-start'}]}
             onPress={() => {
               // navigation.navigate('ClassTimeTable');
-              navigation.navigate('ClassTimeTable');
+              navigation.navigate('ClassTimeTable', navigation);
             }}>
             <Image
               source={require('../logo/schedule.png')}
