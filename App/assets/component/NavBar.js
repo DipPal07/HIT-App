@@ -33,6 +33,7 @@ const NavBar = props => {
         ]}>
         <TouchableOpacity
           onPress={() => {
+            navigation.openDrawer();
             console.log(props.data);
           }}>
           <Image style={styles.logo} source={require('../logo/SSU.png')} />
