@@ -14,6 +14,10 @@ const URL = {
     url: '/api/syllabus',
     method: 'GET',
   },
+  createNotice: {
+    url: '/api/notice',
+    method: 'GET',
+  },
 };
 
 export default URL;

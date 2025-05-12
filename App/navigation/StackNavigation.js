@@ -20,6 +20,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import {AuthContext} from '../utils/AuthContext';
 import {UserRole} from '../assets/constant/userConstant';
+import ShowPdfFullViewMode from '../screens/ShowPdfFullViewMode';
+import CreateNotice from '../screens/CreateNotice';
 
 // Create navigators
 const Stack = createNativeStackNavigator();
@@ -104,6 +106,11 @@ const MainStack = () => {
       <Stack.Screen name="NoticeBoard" component={NoticeBoard} />
       <Stack.Screen name="ReportCard" component={ReportCard} />
       <Stack.Screen name="SeePdf" component={SeePdf} />
+      <Stack.Screen name="CreateNotice" component={CreateNotice} />
+      <Stack.Screen
+        name="ShowPdfFullViewMode"
+        component={ShowPdfFullViewMode}
+      />
     </Stack.Navigator>
   );
 };

@@ -1,31 +1,41 @@
-import {Button, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import DocumentPicker from 'react-native-document-picker';
+import React, {useState} from 'react';
+import {Button, View, Text} from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const Testing = () => {
-  const selectDoc = async () => {
-    try {
-      const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.allFiles],
-      });
-      console.log(res);
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        console.log('User cancelled the picker');
-      } else {
-        console.error('Unknown error: ', err);
-      }
-    }
+  const [isVisible, setIsVisible] = useState(false);
+  const [date, setDate] = useState(new Date());
+
+  const showDatePicker = () => {
+    setIsVisible(true);
+  };
+
+  const hideDatePicker = () => {
+    setIsVisible(false);
+  };
+
+  const handleConfirm = selectedDate => {
+    setDate(selectedDate);
+    hideDatePicker();
   };
 
   return (
-    <View>
-      <Text>Document picker</Text>
-      <Button title="Pick Document" onPress={selectDoc} />
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Button title="Show Date Picker" onPress={showDatePicker} />
+
+      <Text style={{marginTop: 20}}>
+        Selected Date: {date.toLocaleDateString()}
+      </Text>
+
+      <DateTimePickerModal
+        isVisible={isVisible}
+        mode="date"
+        date={date}
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+      />
     </View>
   );
 };
 
 export default Testing;
-
-const styles = StyleSheet.create({});
