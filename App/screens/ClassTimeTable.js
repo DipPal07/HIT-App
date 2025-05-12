@@ -6,13 +6,33 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DropdownSelectList from '../assets/component/DropdownSelectList';
 import NavBar from '../assets/component/NavBar';
-import Testing from '../assets/component/Testing';
 import Button from '../assets/component/Button';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {UserRole} from '../assets/constant/userConstant';
+import DocumentPicker from 'react-native-document-picker';
+import api from '../utils/api';
+import URL from '../assets/constant/url';
 const ClassTimeTable = ({navigation}) => {
+  const [userType, setUserType] = useState(UserRole.NOTLOGIN);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userRole = await AsyncStorage.getItem('role');
+        if (userRole) {
+          setUserType(userRole);
+        }
+        console.log(userRole);
+        // Perform any additional logic with userData if needed
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const themes = useColorScheme();
   const [dropDownData, setDropSownData] = useState();
   const dropdownListDataHandel = data => {
@@ -20,11 +40,68 @@ const ClassTimeTable = ({navigation}) => {
     setDropSownData(data);
   };
   const buttonHandel = () => {
+    if (!dropDownData) {
+      alert('Please select a course');
+      return;
+    }
     navigation.navigate('SeePdf', {
       data: dropDownData,
+      uri: URL.getClassRoutine.url,
     });
     console.log('button pressed....');
   };
+
+  const handleUpload = async () => {
+    if (dropDownData) {
+      console.log(dropDownData);
+
+      try {
+        const res = await DocumentPicker.pick({
+          type: [DocumentPicker.types.pdf],
+        });
+
+        const formData = new FormData();
+
+        formData.append('pdf', {
+          uri: res[0].uri,
+          name: res[0].name,
+          type: res[0].type || 'application/pdf', // adjust MIME if known
+        });
+
+        formData.append('courseName', dropDownData.courseName);
+        formData.append('semester', dropDownData.semester);
+
+        const response = await api.post('/api/class-routine', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        console.log('Upload success:', response.data);
+      } catch (err) {
+        if (DocumentPicker.isCancel(err)) {
+          console.log('User cancelled the picker');
+        } else {
+          console.error('Upload error: ', err);
+        }
+        if (err.response) {
+          // Server responded with an error (non-2xx status)
+          console.error(`Error: ${err.response.status}${err.response}`);
+          console.error('Server response:', err.response.data);
+        } else if (err.request) {
+          // No response received (network error, server down, etc.)
+          console.error('Network Error: No response received from the server');
+          console.error('Request details:', err.request);
+        } else {
+          // Error in setting up the request (e.g., invalid URL)
+          console.error('Error in setting up the request:', err.message);
+        }
+      }
+    } else {
+      alert('Please select a course');
+    }
+  };
+
   return (
     <View>
       <ImageBackground
@@ -41,6 +118,13 @@ const ClassTimeTable = ({navigation}) => {
           <DropdownSelectList dropdowninfo={dropdownListDataHandel} />
           <Button data={{title: 'Search'}} onPress={buttonHandel} />
           {/* <Text>{dropDownData ? dropDownData : ''}</Text> */}
+          {userType === UserRole.ADMIN && (
+            <Button
+              style={{margin: '10px', left: '10px'}}
+              data={{title: 'Upload'}}
+              onPress={handleUpload}
+            />
+          )}
         </View>
       </ImageBackground>
     </View>

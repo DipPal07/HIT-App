@@ -14,8 +14,9 @@ export default function SeePdf({route}) {
   const [pdfUri, setPdfUri] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const {data} = route.params;
+  const {data, uri} = route.params;
   console.log(data);
+  console.log(uri);
 
   const source = {
     uri: 'https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf',
@@ -29,7 +30,7 @@ export default function SeePdf({route}) {
     console.log(`${URL.baseUri}${URL.getClassRoutine.url}`);
 
     fetch(
-      `${URL.baseUri}${URL.getClassRoutine.url}?courseName=${data.courseName}&semester=${data.semester}`,
+      `${URL.baseUri}${uri}?courseName=${data.courseName}&semester=${data.semester}`,
       {
         method: 'GET',
         headers: {
@@ -39,7 +40,11 @@ export default function SeePdf({route}) {
     )
       .then(res => res.json())
       .then(json => {
-        setPdfUri(json.data.link);
+        console.log(json);
+        setPdfUri(`${URL.baseUri}${json.data.link}`);
+        console.log(pdfUri);
+        console.log(json);
+
         setLoading(false);
       })
       .catch(err => {
@@ -70,7 +75,7 @@ export default function SeePdf({route}) {
       {pdfUri && (
         <Pdf
           trustAllCerts={false}
-          source={source}
+          source={{uri: pdfUri, cache: true}}
           onLoadComplete={(numberOfPages, filePath) => {
             console.log(`Number of pages: ${numberOfPages}`);
           }}

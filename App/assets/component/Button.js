@@ -13,6 +13,7 @@ const Button = props => {
         justifyContent: 'center',
         borderRadius: 20,
         elevation: 5,
+        marginVertical: 10,
       }}
       onPress={() => {
         props.onPress();

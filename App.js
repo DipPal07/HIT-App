@@ -5,9 +5,14 @@ import NavBar from './App/assets/component/NavBar';
 import ClassTimeTable from './App/screens/ClassTimeTable';
 import Syllabus from './App/screens/Syllabus';
 import StackNavigation from './App/navigation/StackNavigation';
+import {AuthProvider} from './App/utils/AuthContext';
 
 const App = () => {
-  return <StackNavigation />;
+  return (
+    <AuthProvider>
+      <StackNavigation />
+    </AuthProvider>
+  );
   // return <Home />;
   // return <ClassTimeTable />;
   // return <Syllabus />;
