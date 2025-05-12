@@ -8,21 +8,31 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import NavBar from '../assets/component/NavBar';
 import NoticeData from '../assets/component/NoticeData';
 import api from '../utils/api';
 import URL from '../assets/constant/url';
 import Pdf from 'react-native-pdf';
-import {FormatDate} from '../utils/CommonUtils';
+import {FormatDate, getUserRole} from '../utils/CommonUtils';
 import {useNavigation} from '@react-navigation/native';
-
+import {UserRole} from '../assets/constant/userConstant';
+import {AuthContext} from '../utils/AuthContext';
 const NoticeBoard = ({route}) => {
+  const {isAdmin} = useContext(AuthContext);
+
+  const [role, setRole] = React.useState(UserRole.NOTLOGIN);
   const navigation = useNavigation();
   const [noticeData, setNoticeData] = useState([]);
   const themes = JSON.stringify(route.params);
   console.log(themes);
   console.log(NoticeData);
+  useEffect(() => {
+    (async () => {
+      const userRole = await getUserRole();
+      setRole(userRole);
+    })();
+  }, []);
 
   const fetchNoticeData = async () => {
     try {
@@ -110,23 +120,25 @@ const NoticeBoard = ({route}) => {
           );
         }}
       />
-      <TouchableOpacity onPress={() => navigation.navigate('CreateNotice')}>
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 20,
-            right: 20,
-            backgroundColor: '#c2c2c2',
-            borderRadius: 50,
-            elevation: 5,
-            width: 60,
-            height: 60,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text style={{fontSize: 30, color: 'white'}}>+</Text>
-        </View>
-      </TouchableOpacity>
+      {isAdmin && (
+        <TouchableOpacity onPress={() => navigation.navigate('CreateNotice')}>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 20,
+              right: 20,
+              backgroundColor: '#c2c2c2',
+              borderRadius: 50,
+              elevation: 5,
+              width: 60,
+              height: 60,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={{fontSize: 30, color: 'white'}}>+</Text>
+          </View>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

@@ -15,7 +15,9 @@ import {all} from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from '../utils/AuthContext';
 import {useNavigation} from '@react-navigation/native';
+import {UserRole} from '../assets/constant/userConstant';
 const LoginScreen = () => {
+  const {setIsAdmin} = useContext(AuthContext);
   const navigation = useNavigation();
   const {login} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
@@ -47,6 +49,10 @@ const LoginScreen = () => {
         Alert.alert('Success', 'Login successful!');
 
         storeToken(response.data.data.token);
+        if (response.data.data.user.role === UserRole.ADMIN) {
+          setIsAdmin(true);
+          console.log('admin login success');
+        }
         await AsyncStorage.setItem('role', response.data.data.user.role);
         await AsyncStorage.setItem('name', response.data.data.user.name);
         // Handle successful login (e.g., navigate to another screen)

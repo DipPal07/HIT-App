@@ -1,5 +1,3 @@
-import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-
 const URL = {
   baseUri: 'http://10.0.2.2:3000',
   login: {
@@ -16,6 +14,10 @@ const URL = {
   },
   createNotice: {
     url: '/api/notice',
+    method: 'GET',
+  },
+  jobAndScholarship: {
+    url: '/api/job-and-scholarship',
     method: 'GET',
   },
 };

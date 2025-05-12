@@ -59,6 +59,7 @@ const NewsAndEvent = () => {
         data={newsAndEventData}
         scrollAnimationDuration={1000}
         mode="parallax"
+        // mode="horizontal-stack"
         // pagingEnabled={true}
         // snapEnabled={true}
         // parallax

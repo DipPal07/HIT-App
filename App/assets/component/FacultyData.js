@@ -4,60 +4,62 @@ const facultyData = [
     courseType: 'UG',
     courseNameAndSemester: [
       {
-        courseName: 'Agricultural Engineering',
-        semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
-      },
-      {
-        courseName: 'Applied Electronics and Instrumentation Engineering',
-        semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
-      },
-      {
-        courseName: 'Biotechnology',
-        semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
-      },
-      {
-        courseName: 'Chemical Engineering',
-        semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
-      },
-      {
-        courseName: 'Civil Engineering',
-        semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
-      },
-      {
-        courseName: 'Computer Science and Engineering',
+        courseName: 'B.Tech (Agricultural Engineering)',
         semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
       },
       {
         courseName:
-          'Computer Science and Engineering (Artificial Intelligence and Machine Learning)',
+          'B.Tech (Applied Electronics and Instrumentation Engineering)',
         semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
       },
       {
-        courseName: 'Computer Science and Engineering (Cyber Security)',
+        courseName: 'B.Tech (Biotechnology)',
         semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
       },
       {
-        courseName: 'Computer Science and Engineering (Data Science)',
+        courseName: 'B.Tech (Chemical Engineering)',
         semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
       },
       {
-        courseName: 'Electrical Engineering',
+        courseName: 'B.Tech (Civil Engineering)',
         semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
       },
       {
-        courseName: 'Electronics and Communication Engineering',
+        courseName: 'B.Tech (Computer Science and Engineering)',
         semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
       },
       {
-        courseName: 'Food Technology',
+        courseName:
+          'B.Tech (Computer Science and Engineering - Artificial Intelligence and Machine Learning)',
         semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
       },
       {
-        courseName: 'Information Technology',
+        courseName:
+          'B.Tech (Computer Science and Engineering - Cyber Security)',
         semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
       },
       {
-        courseName: 'Mechanical Engineering',
+        courseName: 'B.Tech (Computer Science and Engineering - Data Science)',
+        semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
+      },
+      {
+        courseName: 'B.Tech (Electrical Engineering)',
+        semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
+      },
+      {
+        courseName: 'B.Tech (Electronics and Communication Engineering)',
+        semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
+      },
+      {
+        courseName: 'B.Tech (Food Technology)',
+        semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
+      },
+      {
+        courseName: 'B.Tech (Information Technology)',
+        semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
+      },
+      {
+        courseName: 'B.Tech (Mechanical Engineering)',
         semester: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'],
       },
     ],
@@ -67,31 +69,31 @@ const facultyData = [
     courseType: 'PG',
     courseNameAndSemester: [
       {
-        courseName: 'Chemical Engineering',
+        courseName: 'M.Tech (Chemical Engineering)',
         semester: ['I', 'II', 'III', 'IV'],
       },
       {
-        courseName: 'Computer Science and Engineering',
+        courseName: 'M.Tech (Computer Science and Engineering)',
         semester: ['I', 'II', 'III', 'IV'],
       },
       {
-        courseName: 'Electronics and Communication Engineering',
+        courseName: 'M.Tech (Electronics and Communication Engineering)',
         semester: ['I', 'II', 'III', 'IV'],
       },
       {
-        courseName: 'Mechanical Engineering',
+        courseName: 'M.Tech (Mechanical Engineering)',
         semester: ['I', 'II', 'III', 'IV'],
       },
       {
-        courseName: 'Biotechnology',
+        courseName: 'M.Tech (Biotechnology)',
         semester: ['I', 'II', 'III', 'IV'],
       },
       {
-        courseName: 'Power Systems',
+        courseName: 'M.Tech (Power Systems)',
         semester: ['I', 'II', 'III', 'IV'],
       },
       {
-        courseName: 'Structural Engineering',
+        courseName: 'M.Tech (Structural Engineering)',
         semester: ['I', 'II', 'III', 'IV'],
       },
       {

@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const FormatDate = dateString => {
   const date = new Date(dateString); // Parse the ISO date string into a Date object
   const day = String(date.getDate()).padStart(2, '0'); // Get day (with leading 0 if needed)
@@ -6,5 +8,9 @@ const FormatDate = dateString => {
 
   return `${day}-${month}-${year}`;
 };
+const getUserRole = async () => {
+  const userRole = await AsyncStorage.getItem('role');
+  return userRole;
+};
 
-export {FormatDate};
+export {FormatDate, getUserRole};

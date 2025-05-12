@@ -9,6 +9,7 @@ import {
 import Pdf from 'react-native-pdf';
 import NavBar from '../assets/component/NavBar';
 import URL from '../assets/constant/url';
+import api from '../utils/api';
 
 export default function SeePdf({route}) {
   const [pdfUri, setPdfUri] = useState('');
@@ -28,7 +29,24 @@ export default function SeePdf({route}) {
     setLoading(true);
     console.log('helloooooooooooo');
     console.log(`${URL.baseUri}${URL.getClassRoutine.url}`);
+    (async () => {
+      try {
+        const response = await api.get(`${URL.baseUri}${uri}`, {
+          params: {
+            courseName: data.courseName,
+            semester: data.semester,
+          },
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error.response.data);
+      }
 
+      console.log(response.data);
+      // setPdfUri(`${URL.baseUri}${response.data.data.link}`);
+      // console.log(pdfUri);
+      // console.log(response.data);
+      // setLoading(false);
+    })();
     fetch(
       `${URL.baseUri}${uri}?courseName=${data.courseName}&semester=${data.semester}`,
       {
