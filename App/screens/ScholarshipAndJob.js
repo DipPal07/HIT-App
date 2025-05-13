@@ -19,6 +19,7 @@ import {AuthContext} from '../utils/AuthContext';
 
 const ScholarshipAndJob = ({route, navigation}) => {
   const {isAdmin} = useContext(AuthContext);
+  console.log(isAdmin, 'ffffffffffffffffffffffff');
   const themes = JSON.stringify(route.params);
   const [jobAndScholarshipData, setJobAndScholarshipData] = useState(
     JobAndScholarshipData,
@@ -162,7 +163,7 @@ const ScholarshipAndJob = ({route, navigation}) => {
               position: 'absolute',
               bottom: 20,
               right: 20,
-              backgroundColor: '#c2c2c2',
+              backgroundColor: '#1B3058',
               borderRadius: 50,
               elevation: 5,
               width: 60,

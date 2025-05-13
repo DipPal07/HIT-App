@@ -12,7 +12,7 @@ const Placement = () => {
   const themes = useColorScheme();
 
   return (
-    <View>
+    <View style={{padding: 10}}>
       <Text
         style={[
           styles.headingText,

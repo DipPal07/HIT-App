@@ -23,6 +23,7 @@ import {UserRole} from '../assets/constant/userConstant';
 import ShowPdfFullViewMode from '../screens/ShowPdfFullViewMode';
 import CreateNotice from '../screens/CreateNotice';
 import CreateJobAndScholarship from '../screens/CreateJobAndScholorship';
+import ComingSoon from '../screens/ComingSoon';
 
 // Create navigators
 const Stack = createNativeStackNavigator();
@@ -116,6 +117,7 @@ const MainStack = () => {
         name="ShowPdfFullViewMode"
         component={ShowPdfFullViewMode}
       />
+      <Stack.Screen name="ComingSoon" component={ComingSoon} />
     </Stack.Navigator>
   );
 };

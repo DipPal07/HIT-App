@@ -28,7 +28,7 @@ const Home = ({navigation}) => {
             data={{
               backButton: false,
               currentThemes: themes,
-              headingText: 'Sri Sri University',
+              headingText: 'HIT',
             }}
           />
 

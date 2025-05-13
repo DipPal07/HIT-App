@@ -16,7 +16,7 @@ const ReportCard = ({route, navigation}) => {
       />
       {/* <Text>Dip</Text> */}
       <WebView
-        source={{uri: 'https://srisriuniversity.edu.in/result/'}}
+        source={{uri: 'https://hit.ucanapply.com/'}}
         style={{flex: 1, marginHorizontal: 10}}
       />
     </View>

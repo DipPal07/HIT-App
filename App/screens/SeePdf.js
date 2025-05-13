@@ -27,7 +27,6 @@ export default function SeePdf({route}) {
   useEffect(() => {
     setError(false);
     setLoading(true);
-    console.log('helloooooooooooo');
     console.log(`${URL.baseUri}${URL.getClassRoutine.url}`);
     (async () => {
       try {

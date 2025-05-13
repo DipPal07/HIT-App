@@ -1,6 +1,7 @@
 // AuthContext.js
 import React, {createContext, useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {UserRole} from '../assets/constant/userConstant';
 
 export const AuthContext = createContext();
 
@@ -12,8 +13,15 @@ export const AuthProvider = ({children}) => {
     const token = await AsyncStorage.getItem('token');
     setIsLoggedIn(!!token);
   };
-
+  const checkAdmin = async () => {
+    const role = await AsyncStorage.getItem('role');
+    if (role === UserRole.ADMIN) {
+      setIsAdmin(true);
+      console.log('admin login success');
+    }
+  };
   useEffect(() => {
+    checkAdmin();
     checkToken();
   }, []);
 

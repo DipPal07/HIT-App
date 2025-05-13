@@ -29,7 +29,7 @@ export default function ShowPdfFullViewMode({route}) {
         data={{
           backButton: true,
           currentThemes: 'light',
-          headingText: 'See Pdf',
+          headingText: 'Notice',
         }}
       />
 

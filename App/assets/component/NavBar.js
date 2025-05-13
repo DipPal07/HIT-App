@@ -36,28 +36,27 @@ const NavBar = props => {
             navigation.openDrawer();
             console.log(props.data);
           }}>
-          <Image style={styles.logo} source={require('../logo/SSU.png')} />
+          <Image style={styles.logo} source={require('../logo/hit.png')} />
         </TouchableOpacity>
       </View>
       <View
-        style={{
-          flex: 2,
-          backgroundColor: themes == 'dark' ? '#682F2F' : 'pink',
-          borderRadius: 20,
-        }}>
+        style={[
+          {backgroundColor: themes == 'dark' ? '#682F2F' : '#d5ffe7'},
+          {borderRadius: 20, flex: 2},
+        ]}>
         <Text
           style={[
             styles.mainText,
-            {color: themes == 'dark' ? '#F1F1F1' : '#893535'},
+            {color: themes == 'dark' ? '#F1F1F1' : '#1B3058'},
           ]}>
           {props.data.headingText}
         </Text>
         <Text
           style={[
             styles.tagLine,
-            {color: themes == 'dark' ? '#F1F1F1' : '#202020'},
+            {color: themes == 'dark' ? '#F1F1F1' : '#1B3058'},
           ]}>
-          Learn Lead Serve
+          Jnanam Vijnanam Sahitam
         </Text>
       </View>
       <View

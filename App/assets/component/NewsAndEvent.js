@@ -15,10 +15,11 @@ import Carousel from 'react-native-reanimated-carousel';
 const NewsAndEvent = () => {
   const width = Dimensions.get('window').width;
   const newsAndEventData = [
-    {id: 1, image: require('../newsAndEventImage/1.jpg')},
-    {id: 2, image: require('../newsAndEventImage/2.jpeg')},
-    {id: 3, image: require('../newsAndEventImage/3.jpeg')},
-    {id: 4, image: require('../newsAndEventImage/4.png')},
+    {id: 1, image: require('../newsAndEventImage/hit/h1.jpeg')},
+    {id: 2, image: require('../newsAndEventImage/hit/h2.jpeg')},
+    {id: 3, image: require('../newsAndEventImage/hit/h3.jpg')},
+    {id: 4, image: require('../newsAndEventImage/hit/h4.jpg')},
+    {id: 4, image: require('../newsAndEventImage/hit/h5.jpg')},
   ];
   const themes = useColorScheme();
   const renderItem = ({item, index}) => {
@@ -33,14 +34,7 @@ const NewsAndEvent = () => {
   };
 
   return (
-    <View>
-      <Text
-        style={[
-          styles.headingText,
-          {color: themes == 'dark' ? '#F1F1F1' : '#202020'},
-        ]}>
-        News & Event
-      </Text>
+    <View style={{}}>
       {/* <FlatList
         data={newsAndEventData}
         renderItem={renderItem}
@@ -54,7 +48,7 @@ const NewsAndEvent = () => {
       <Carousel
         loop
         width={width}
-        height={width}
+        height={250}
         autoPlay={true}
         data={newsAndEventData}
         scrollAnimationDuration={1000}
@@ -66,26 +60,6 @@ const NewsAndEvent = () => {
         // onSnapToItem={index => console.log('current index:', index)}
         renderItem={renderItem}
       />
-      {/* <View
-        style={{
-          flexDirection: 'row',
-          width: width,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        {newsAndEventData.map((item, index) => {
-          return (
-            <View
-              style={{
-                height: 8,
-                width: 8,
-                borderRadius: 4,
-                backgroundColor: 'red',
-                marginLeft: 5,
-              }}></View>
-          );
-        })}
-      </View> */}
     </View>
   );
 };
@@ -94,14 +68,15 @@ export default NewsAndEvent;
 
 const styles = StyleSheet.create({
   newsAndEventImage: {
-    height: 400,
-    width: 400,
+    height: '100%',
+    width: '100%',
+    // objectFit: 'cover',
     borderRadius: 10,
     // margin: 2,
   },
   headingText: {
     fontSize: 20,
     fontWeight: '500',
-    paddingLeft: 10,
+    // paddingLeft: 10,
   },
 });

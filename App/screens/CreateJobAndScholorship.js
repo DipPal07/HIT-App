@@ -44,10 +44,7 @@ const CreateJobAndScholarship = () => {
       !eligibility ||
       !applyLink
     ) {
-      Alert.alert(
-        'Error',
-        'Please fill all fields and select a valid image URL.',
-      );
+      Alert.alert('Error', 'Please fill all fields');
       return;
     }
 
@@ -104,7 +101,7 @@ const CreateJobAndScholarship = () => {
         data={{
           backButton: true,
           currentThemes: themes,
-          headingText: 'Create Notice',
+          headingText: 'Create Job/Scholarship',
         }}
       />
       <View style={styles.container}>

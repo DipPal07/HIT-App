@@ -127,7 +127,7 @@ const NoticeBoard = ({route}) => {
               position: 'absolute',
               bottom: 20,
               right: 20,
-              backgroundColor: '#c2c2c2',
+              backgroundColor: '#1B3058',
               borderRadius: 50,
               elevation: 5,
               width: 60,

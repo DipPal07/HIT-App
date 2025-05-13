@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import DocumentPicker from 'react-native-document-picker';
-import axios from 'axios'; // make sure axios is installed
 import URL from '../assets/constant/url';
 import api from '../utils/api';
 import NavBar from '../assets/component/NavBar';

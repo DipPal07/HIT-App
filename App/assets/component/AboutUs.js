@@ -7,7 +7,7 @@ const AboutUs = () => {
   const textColor = themes == 'dark' ? '#F1F1F1' : '#202020';
 
   return (
-    <View>
+    <View style={{padding: 10}}>
       <Text style={[styles.headingText, {color: textColor}]}>About Us</Text>
       <View>
         <View style={[styles.rowStyle, {}]}>
@@ -18,10 +18,10 @@ const AboutUs = () => {
               style={styles.icon}
             />
             <Text style={[styles.text, {color: textColor, fontWeight: 'bold'}]}>
-              Start-Up Hub
+              Modern Infrastructure
             </Text>
             <Text style={[styles.text, {color: textColor}]}>
-              120+ Startups - Govt. Approved Incubator
+              The campus is well-equipped with modern infrastructure
             </Text>
           </View>
           <View style={[styles.imageAndTextContainer, {alignItems: 'center'}]}>
@@ -34,10 +34,10 @@ const AboutUs = () => {
                   fontWeight: 'bold',
                 },
               ]}>
-              30+ Awards
+              University Affiliation
             </Text>
             <Text style={[styles.text, {color: textColor}]}>
-              Recognized Nationally and Internationally
+              HIT is affiliated with MAKAUT and approved by AICTE
             </Text>
           </View>
         </View>
@@ -56,7 +56,7 @@ const AboutUs = () => {
               Green Campus
             </Text>
             <Text style={[styles.text, {color: textColor}]}>
-              Sprawling 188 acres serene campus
+              Sprawling 37 acres serene campus
             </Text>
           </View>
           <View

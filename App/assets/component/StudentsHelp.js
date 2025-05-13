@@ -63,7 +63,7 @@ const StudentsHelp = ({navigation}) => {
           <TouchableOpacity
             style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}
             onPress={() => {
-              Linking.openURL('https://srisriuniversity.edu.in/');
+              Linking.openURL('https://hithaldia.ac.in/');
             }}>
             <Image
               source={require('../logo/website.png')}
@@ -101,7 +101,10 @@ const StudentsHelp = ({navigation}) => {
           <TouchableOpacity
             style={[styles.imageAndTextContainer, {alignItems: 'center'}]}
             onPress={() => {
-              navigation.navigate('StudentsCreativity', {themes: themes});
+              navigation.navigate('ComingSoon', {
+                navName: 'Students Creativity',
+                themes: themes,
+              });
             }}>
             <Image
               source={require('../logo/Creativity.png')}
@@ -127,7 +130,13 @@ const StudentsHelp = ({navigation}) => {
           {/* <View
             style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}> */}
           <TouchableOpacity
-            style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}>
+            style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}
+            onPress={() => {
+              navigation.navigate('ComingSoon', {
+                navName: 'Students Creativity',
+                themes: themes,
+              });
+            }}>
             <Image
               source={require('../logo/library.png')}
               style={styles.icon}
@@ -159,7 +168,7 @@ const styles = StyleSheet.create({
   headingText: {
     fontSize: 20,
     fontWeight: '500',
-    marginTop: 10,
+    // marginTop: 10,
     paddingLeft: 10,
   },
   icon: {
