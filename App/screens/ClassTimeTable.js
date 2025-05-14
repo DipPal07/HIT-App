@@ -1,11 +1,4 @@
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {ImageBackground, StyleSheet, useColorScheme, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import DropdownSelectList from '../assets/component/DropdownSelectList';
 import NavBar from '../assets/component/NavBar';
@@ -15,8 +8,19 @@ import {UserRole} from '../assets/constant/userConstant';
 import DocumentPicker from 'react-native-document-picker';
 import api from '../utils/api';
 import URL from '../assets/constant/url';
+import CustomModal from '../assets/component/CoustomModal';
+
 const ClassTimeTable = ({navigation}) => {
   const [userType, setUserType] = useState(UserRole.NOTLOGIN);
+  const [dropDownData, setDropSownData] = useState();
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalType, setModalType] = useState('success');
+
+  const themes = useColorScheme();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,7 +29,6 @@ const ClassTimeTable = ({navigation}) => {
           setUserType(userRole);
         }
         console.log(userRole);
-        // Perform any additional logic with userData if needed
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -33,15 +36,21 @@ const ClassTimeTable = ({navigation}) => {
     fetchData();
   }, []);
 
-  const themes = useColorScheme();
-  const [dropDownData, setDropSownData] = useState();
+  const showModal = (title, message, type) => {
+    setModalTitle(title);
+    setModalMessage(message);
+    setModalType(type);
+    setModalVisible(true);
+  };
+
   const dropdownListDataHandel = data => {
     console.log(data);
     setDropSownData(data);
   };
+
   const buttonHandel = () => {
     if (!dropDownData) {
-      alert('Please select a course');
+      showModal('Missing Selection', 'Please select a course', 'error');
       return;
     }
     navigation.navigate('SeePdf', {
@@ -52,53 +61,48 @@ const ClassTimeTable = ({navigation}) => {
   };
 
   const handleUpload = async () => {
-    if (dropDownData) {
-      console.log(dropDownData);
+    if (!dropDownData) {
+      showModal('Missing Selection', 'Please select a course', 'error');
+      return;
+    }
 
-      try {
-        const res = await DocumentPicker.pick({
-          type: [DocumentPicker.types.pdf],
-        });
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.pdf],
+      });
 
-        const formData = new FormData();
+      const formData = new FormData();
+      formData.append('pdf', {
+        uri: res[0].uri,
+        name: res[0].name,
+        type: res[0].type || 'application/pdf',
+      });
+      formData.append('courseName', dropDownData.courseName);
+      formData.append('semester', dropDownData.semester);
 
-        formData.append('pdf', {
-          uri: res[0].uri,
-          name: res[0].name,
-          type: res[0].type || 'application/pdf', // adjust MIME if known
-        });
+      const response = await api.post('/api/class-routine', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
-        formData.append('courseName', dropDownData.courseName);
-        formData.append('semester', dropDownData.semester);
+      console.log('Upload success:', response.data);
+      showModal(
+        'Upload Successful',
+        'The class routine was uploaded successfully.',
+        'success',
+      );
+    } catch (err) {
+      let errorMsg = 'An unexpected error occurred. Please try again.';
 
-        const response = await api.post('/api/class-routine', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        console.log('Upload success:', response.data);
-      } catch (err) {
-        if (DocumentPicker.isCancel(err)) {
-          console.log('User cancelled the picker');
-        } else {
-          console.error('Upload error: ', err);
-        }
-        if (err.response) {
-          // Server responded with an error (non-2xx status)
-          console.error(`Error: ${err.response.status}${err.response}`);
-          console.error('Server response:', err.response.data);
-        } else if (err.request) {
-          // No response received (network error, server down, etc.)
-          console.error('Network Error: No response received from the server');
-          console.error('Request details:', err.request);
-        } else {
-          // Error in setting up the request (e.g., invalid URL)
-          console.error('Error in setting up the request:', err.message);
-        }
+      if (DocumentPicker.isCancel(err)) {
+        errorMsg = 'Upload cancelled by user.';
+      } else if (err.response?.data?.message) {
+        errorMsg = err.response.data.message;
       }
-    } else {
-      alert('Please select a course');
+
+      console.error('Upload error: ', err);
+      showModal('Upload Failed', errorMsg, 'error');
     }
   };
 
@@ -117,7 +121,6 @@ const ClassTimeTable = ({navigation}) => {
         <View style={{top: '15%'}}>
           <DropdownSelectList dropdowninfo={dropdownListDataHandel} />
           <Button data={{title: 'Search'}} onPress={buttonHandel} />
-          {/* <Text>{dropDownData ? dropDownData : ''}</Text> */}
           {userType === UserRole.ADMIN && (
             <Button
               style={{margin: '10px', left: '10px'}}
@@ -126,6 +129,14 @@ const ClassTimeTable = ({navigation}) => {
             />
           )}
         </View>
+
+        <CustomModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          title={modalTitle}
+          message={modalMessage}
+          type={modalType}
+        />
       </ImageBackground>
     </View>
   );

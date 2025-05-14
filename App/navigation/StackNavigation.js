@@ -118,6 +118,7 @@ const MainStack = () => {
         component={ShowPdfFullViewMode}
       />
       <Stack.Screen name="ComingSoon" component={ComingSoon} />
+      <Stack.Screen name="Login" component={LoginScreen} />
     </Stack.Navigator>
   );
 };
@@ -125,22 +126,6 @@ const MainStack = () => {
 const StackNavigation = () => {
   return (
     <NavigationContainer>
-      {/* <Drawer.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerShown: false,
-          drawerStyle: {
-            backgroundColor: '#2c3e50', // Dark background for the drawer
-            width: 240, // Adjust the width of the drawer
-          },
-          drawerLabelStyle: {
-            fontSize: 16,
-            color: '#ecf0f1', // Light text color for readability
-            fontWeight: 'bold', // Make the text bold
-          },
-          drawerActiveTintColor: '#4CAF50', // Active screen highlight color
-          drawerInactiveTintColor: '#ecf0f1', // Inactive screen color
-        }}> */}
       <Drawer.Navigator
         initialRouteName="Home"
         screenOptions={{
