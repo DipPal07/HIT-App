@@ -1,5 +1,5 @@
 const URL = {
-  baseUri: 'http://10.0.2.2:3000',
+  baseUri: 'http://159.65.149.200:3399',
   login: {
     url: '/api/login',
     method: 'POST',

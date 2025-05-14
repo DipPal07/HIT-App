@@ -1,16 +1,14 @@
 import {
   Dimensions,
   FlatList,
-  Image,
-  Modal,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
+  StyleSheet,
+  Alert,
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import NavBar from '../assets/component/NavBar';
-import NoticeData from '../assets/component/NoticeData';
 import api from '../utils/api';
 import URL from '../assets/constant/url';
 import Pdf from 'react-native-pdf';
@@ -18,15 +16,26 @@ import {FormatDate, getUserRole} from '../utils/CommonUtils';
 import {useNavigation} from '@react-navigation/native';
 import {UserRole} from '../assets/constant/userConstant';
 import {AuthContext} from '../utils/AuthContext';
-const NoticeBoard = ({route}) => {
-  const {isAdmin} = useContext(AuthContext);
+import NetworkIssue from '../assets/component/NetworkIssue';
+import DataNotFound from '../assets/component/DataNotFound';
+import ServerError from '../assets/component/ServerError';
+import LoadingComponent from '../assets/component/LoadingComponent';
 
-  const [role, setRole] = React.useState(UserRole.NOTLOGIN);
-  const navigation = useNavigation();
+const NoticeBoard = ({route}) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isNotFound, setIsNotFound] = useState(false);
+  const [isServerError, setIsServerError] = useState(false);
+  const [isNetworkError, setIsNetworkError] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const {isAdmin} = useContext(AuthContext);
+  const [role, setRole] = useState(UserRole.NOTLOGIN);
   const [noticeData, setNoticeData] = useState([]);
+  const navigation = useNavigation();
+
   const themes = JSON.stringify(route.params);
-  console.log(themes);
-  console.log(NoticeData);
+  const width = Dimensions.get('window').width;
+  const height = Dimensions.get('window').height;
+
   useEffect(() => {
     (async () => {
       const userRole = await getUserRole();
@@ -34,13 +43,34 @@ const NoticeBoard = ({route}) => {
     })();
   }, []);
 
+  const setAllErrorFalse = () => {
+    setIsNetworkError(false);
+    setIsNotFound(false);
+    setIsServerError(false);
+  };
+
   const fetchNoticeData = async () => {
+    setAllErrorFalse();
     try {
+      if (!refreshing) setIsLoading(true);
       const response = await api.get('/api/notice');
-      console.log(response.data);
       setNoticeData(response.data.data);
     } catch (error) {
       console.error('Error fetching notice data:', error);
+      if (error.response) {
+        if (error.response.status >= 500) {
+          setIsServerError(true);
+        } else {
+          setIsNotFound(true);
+        }
+      } else if (error.request) {
+        setIsNetworkError(true);
+      } else {
+        console.error('Error in setting up the request:', error.message);
+      }
+    } finally {
+      setIsLoading(false);
+      setRefreshing(false);
     }
   };
 
@@ -48,8 +78,10 @@ const NoticeBoard = ({route}) => {
     fetchNoticeData();
   }, []);
 
-  const width = Dimensions.get('window').width;
-  const height = Dimensions.get('window').height;
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchNoticeData();
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -60,81 +92,75 @@ const NoticeBoard = ({route}) => {
           headingText: 'Notice Board',
         }}
       />
-      <FlatList
-        data={noticeData}
-        renderItem={(item, index) => {
-          return (
+      {noticeData.length > 0 && (
+        <FlatList
+          data={noticeData}
+          keyExtractor={(item, index) => index.toString()}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          contentContainerStyle={{paddingBottom: 100}}
+          renderItem={({item}) => (
             <View style={styles.cardStyle}>
-              <View
-                style={{
-                  bottom: 13,
-                  // height: 30,
-                  width: 90,
-                  backgroundColor: '#FF3818',
-                  borderRadius: 10,
-                  left: 5,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  elevation: 3,
-                  padding: 5,
-                }}>
-                <Text style={{color: 'white', fontWeight: '600'}}>
-                  {FormatDate(item.item.date)}
-                </Text>
+              <View style={styles.dateBox}>
+                <Text style={styles.dateText}>{FormatDate(item.date)}</Text>
               </View>
 
-              <View>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('ShowPdfFullViewMode', {
-                      uri: `${URL.baseUri}${item.item.link}`,
-                    })
-                  }>
-                  <Pdf
-                    trustAllCerts={false}
-                    source={{
-                      uri: `${URL.baseUri}${item.item.link}`,
-                      cache: true,
-                    }}
-                    onLoadComplete={(numberOfPages, filePath) => {
-                      console.log(`Number of pages: ${numberOfPages}`);
-                    }}
-                    onPageChanged={(page, numberOfPages) => {
-                      console.log(`Current page: ${page}`);
-                    }}
-                    onError={error => {
-                      console.log(error);
-                    }}
-                    onPressLink={uri => {
-                      console.log(`Link pressed: ${uri}`);
-                    }}
-                    style={{
-                      // width: width, // Set width to 100% of the screen
-                      height: height - 220, // Subtract padding for navbar and other content
-                      paddingHorizontal: 0,
-                    }}
-                  />
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('ShowPdfFullViewMode', {
+                    uri: `${URL.baseUri}${item.link}`,
+                  })
+                }>
+                <Pdf
+                  trustAllCerts={false}
+                  source={{
+                    uri: `${URL.baseUri}${item.link}`,
+                    cache: true,
+                  }}
+                  onLoadComplete={numberOfPages => {
+                    console.log(`Number of pages: ${numberOfPages}`);
+                  }}
+                  onPageChanged={page => {
+                    console.log(`Current page: ${page}`);
+                  }}
+                  onError={error => {
+                    console.log(error);
+                  }}
+                  onPressLink={uri => {
+                    console.log(`Link pressed: ${uri}`);
+                  }}
+                  style={{height: height - 220}}
+                />
+              </TouchableOpacity>
             </View>
-          );
-        }}
-      />
+          )}
+        />
+      )}
+
+      {isNetworkError && <NetworkIssue reload={fetchNoticeData} />}
+      {isNotFound && <DataNotFound reload={fetchNoticeData} />}
+      {isServerError && <ServerError reload={fetchNoticeData} />}
+      {isLoading && !refreshing && <LoadingComponent />}
+
       {isAdmin && (
-        <TouchableOpacity onPress={() => navigation.navigate('CreateNotice')}>
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 20,
-              right: 20,
-              backgroundColor: '#1B3058',
-              borderRadius: 50,
-              elevation: 5,
-              width: 60,
-              height: 60,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            bottom: 20,
+            right: 20,
+            zIndex: 10,
+            backgroundColor: '#1B3058',
+            borderRadius: 50,
+            elevation: 5,
+            width: 60,
+            height: 60,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onPress={() => {
+            navigation.navigate('CreateNotice');
+          }}>
+          <View>
             <Text style={{fontSize: 30, color: 'white'}}>+</Text>
           </View>
         </TouchableOpacity>
@@ -156,8 +182,31 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingBottom: 10,
   },
-  pdf: {
-    // width: '100%', // Make sure it's full width
-    height: '100%', // Adjust the height dynamically
+  dateBox: {
+    bottom: 13,
+    width: 90,
+    backgroundColor: '#FF3818',
+    borderRadius: 10,
+    left: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 3,
+    padding: 5,
+  },
+  dateText: {
+    color: 'white',
+    fontWeight: '600',
+  },
+  addButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#1B3058',
+    borderRadius: 50,
+    elevation: 5,
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

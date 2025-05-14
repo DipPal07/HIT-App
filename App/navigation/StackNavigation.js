@@ -182,7 +182,6 @@ const StackNavigation = () => {
         <Drawer.Screen name="ReportCard" component={ReportCard} />
         <Drawer.Screen name="login" component={LoginScreen} />
         <Drawer.Screen name="registration" component={RegistrationScreen} />
-        <Drawer.Screen name="Testing" component={Testing} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

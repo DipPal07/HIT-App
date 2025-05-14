@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from '../utils/AuthContext';
 import {useNavigation} from '@react-navigation/native';
 import {UserRole} from '../assets/constant/userConstant';
+import NavBar from '../assets/component/NavBar';
 const LoginScreen = () => {
   const navigation = useNavigation();
   const {login, setIsAdmin} = useContext(AuthContext);
@@ -48,6 +49,7 @@ const LoginScreen = () => {
         Alert.alert('Success', 'Login successful!');
 
         storeToken(response.data.data.token);
+        await AsyncStorage.setItem('name', response.data.data.user.name);
         if (response.data.data.user.role === UserRole.ADMIN) {
           setIsAdmin(true);
           console.log('admin login success');
@@ -57,19 +59,27 @@ const LoginScreen = () => {
         await login(response.data.data.token); // store token and update state
         navigation.reset({index: 0, routes: [{name: 'Dashboard'}]});
       } else {
-        Alert.alert('Error', 'Login failed. Please try again.');
+        Alert.alert('Error', 'Login failed. Please try again.........');
       }
       console.log(await AsyncStorage.getItem('user'), 'user..........');
     } catch (error) {
-      Alert.alert('Error', 'Login failed. Please try again.');
+      Alert.alert('Error', String(error));
       console.error('Error during login:', error);
       setLoading(false);
     }
+    setLoading(false);
   };
   console.log(loading);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <NavBar
+        data={{
+          backButton: true,
+          // currentThemes: themes,
+          headingText: 'HIT',
+        }}
+      />
       {loading ? (
         <ActivityIndicator size="large" color="#00ff00" />
       ) : (
@@ -104,6 +114,7 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f4f4f4',
+    paddingTop: 0,
     padding: 20,
     flexGrow: 1,
   },

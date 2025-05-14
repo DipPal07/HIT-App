@@ -1,77 +1,84 @@
 import React, {useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  Dimensions,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 import Pdf from 'react-native-pdf';
+
 import NavBar from '../assets/component/NavBar';
 import URL from '../assets/constant/url';
 import api from '../utils/api';
 
+import LoadingComponent from '../assets/component/LoadingComponent';
+import NetworkIssue from '../assets/component/NetworkIssue';
+import ServerError from '../assets/component/ServerError';
+import DataNotFound from '../assets/component/DataNotFound';
+
 export default function SeePdf({route}) {
   const [pdfUri, setPdfUri] = useState('');
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [errorType, setErrorType] = useState(null); // null | 'network' | 'server' | 'notFound'
+
   const {data, uri} = route.params;
-  console.log(data);
-  console.log(uri);
+  const fetchPdf = async () => {
+    try {
+      setLoading(true);
+      setErrorType(null);
 
-  const source = {
-    uri: 'https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf',
-    cache: true,
-  };
-
-  useEffect(() => {
-    setError(false);
-    setLoading(true);
-    console.log(`${URL.baseUri}${URL.getClassRoutine.url}`);
-    (async () => {
-      try {
-        const response = await api.get(`${URL.baseUri}${uri}`, {
-          params: {
-            courseName: data.courseName,
-            semester: data.semester,
-          },
-        });
-      } catch (error) {
-        console.error('Error fetching data:', error.response.data);
-      }
-
-      console.log(response.data);
-      // setPdfUri(`${URL.baseUri}${response.data.data.link}`);
-      // console.log(pdfUri);
-      // console.log(response.data);
-      // setLoading(false);
-    })();
-    fetch(
-      `${URL.baseUri}${uri}?courseName=${data.courseName}&semester=${data.semester}`,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
+      const response = await api.get(`${URL.baseUri}${uri}`, {
+        params: {
+          courseName: data.courseName,
+          semester: data.semester,
         },
-      },
-    )
-      .then(res => res.json())
-      .then(json => {
-        console.log(json);
-        setPdfUri(`${URL.baseUri}${json.data.link}`);
-        console.log(pdfUri);
-        console.log(json);
-
-        setLoading(false);
-      })
-      .catch(err => {
-        console.log('Fetch error:', err);
-        setError(true);
-        setLoading(false);
       });
 
-    console.log('hiiiiiiii');
-  }, []);
+      const link = response?.data?.data?.link;
+
+      if (link) {
+        setPdfUri(`${URL.baseUri}${link}`);
+      } else {
+        setErrorType('notFound');
+      }
+    } catch (err) {
+      if (err.message?.includes('Network')) {
+        setErrorType('network');
+      } else if (err.response?.status >= 500) {
+        setErrorType('server');
+      } else {
+        setErrorType('notFound');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchPdf();
+  }, [data, uri]);
+
+  const renderContent = () => {
+    if (loading) return <LoadingComponent />;
+    if (errorType === 'network') return <NetworkIssue reload={fetchPdf} />;
+    if (errorType === 'server') return <ServerError reload={fetchPdf} />;
+    if (errorType === 'notFound') return <DataNotFound reload={fetchPdf} />;
+
+    return (
+      <Pdf
+        trustAllCerts={false}
+        source={{uri: pdfUri, cache: true}}
+        onLoadComplete={numberOfPages => {
+          console.log(`Number of pages: ${numberOfPages}`);
+        }}
+        onPageChanged={page => {
+          console.log(`Current page: ${page}`);
+        }}
+        onError={error => {
+          console.log('PDF load error:', error);
+          setErrorType('notFound');
+        }}
+        onPressLink={uri => {
+          console.log(`Link pressed: ${uri}`);
+        }}
+        style={styles.pdf}
+      />
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -82,41 +89,16 @@ export default function SeePdf({route}) {
           headingText: 'See Pdf',
         }}
       />
-      {loading && <ActivityIndicator size="large" color="#00ff00" />}
-      {error && (
-        <View>
-          <Text>Something went wrong</Text>
-        </View>
-      )}
-
-      {pdfUri && (
-        <Pdf
-          trustAllCerts={false}
-          source={{uri: pdfUri, cache: true}}
-          onLoadComplete={(numberOfPages, filePath) => {
-            console.log(`Number of pages: ${numberOfPages}`);
-          }}
-          onPageChanged={(page, numberOfPages) => {
-            console.log(`Current page: ${page}`);
-          }}
-          onError={error => {
-            console.log(error);
-          }}
-          onPressLink={uri => {
-            console.log(`Link pressed: ${uri}`);
-          }}
-          style={styles.pdf}
-        />
-      )}
+      {renderContent()}
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    // marginTop: 25,
   },
   pdf: {
     flex: 1,

@@ -79,6 +79,7 @@ const CreateNotice = () => {
       setDate(new Date());
     } catch (error) {
       console.error(error);
+
       Alert.alert(
         'Upload Failed',
         error?.response?.data?.message || 'Error uploading notice',

@@ -25,6 +25,7 @@ const logout = async () => {
 // Create Axios instance
 const api = axios.create({
   baseURL: URL.baseUri, // replace with actual backend URL
+  timeout: 10000, // 10 seconds timeout
 });
 
 // Attach token to all requests

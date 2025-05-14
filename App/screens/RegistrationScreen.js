@@ -14,6 +14,7 @@ import {Dropdown} from 'react-native-element-dropdown';
 import facultyData from '../assets/component/FacultyData';
 import api from '../utils/api';
 import URL from '../assets/constant/url';
+import NavBar from '../assets/component/NavBar';
 
 const RegistrationScreen = () => {
   const [loading, setLoading] = useState(false);
@@ -95,6 +96,13 @@ const RegistrationScreen = () => {
 
   return (
     <Provider>
+      <NavBar
+        data={{
+          backButton: true,
+          // currentThemes: themes,
+          headingText: 'HIT',
+        }}
+      />
       {loading ? (
         <ActivityIndicator size="large" color="#00ff00" />
       ) : (
