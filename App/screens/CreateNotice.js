@@ -15,9 +15,13 @@ import URL from '../assets/constant/url';
 import api from '../utils/api';
 import NavBar from '../assets/component/NavBar';
 import CustomModal from '../assets/component/CoustomModal';
+import {useNavigation} from '@react-navigation/native';
+import {darkTheme, lightTheme} from '../assets/constant/themes';
 
 const CreateNotice = () => {
-  const themes = useColorScheme();
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
+  const navigation = useNavigation();
   const [noticeNo, setNoticeNo] = useState('');
   const [date, setDate] = useState(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -111,37 +115,61 @@ const CreateNotice = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: theme.background}}>
       <NavBar
         data={{
           backButton: true,
-          currentThemes: themes,
           headingText: 'Create Notice',
         }}
       />
 
       <CustomModal
         visible={modalVisible}
-        onClose={() => setModalVisible(false)}
+        onClose={() => {
+          setModalVisible(false);
+          navigation.navigate('NoticeBoard');
+        }}
         title={modalTitle}
         message={modalMessage}
         type={modalType}
       />
 
       <View style={styles.container}>
-        <Text style={styles.label}>Notice No:</Text>
+        <Text style={[styles.label, {color: theme.inputLabel}]}>
+          Notice No:
+        </Text>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            {
+              backgroundColor: theme.textInputBackground,
+              color: theme.inputText,
+
+              placeholderTextColor: theme.inputText,
+            },
+          ]}
           value={noticeNo}
           onChangeText={setNoticeNo}
           placeholder="Enter notice number"
-          placeholderTextColor="#999"
+          // placeholderTextColor="#999"
         />
 
-        <Text style={styles.label}>Date:</Text>
-        <TouchableOpacity style={styles.datePicker} onPress={showDatePicker}>
-          <Icon name="calendar-outline" size={20} color="#007AFF" />
-          <Text style={styles.dateText}>{date.toLocaleDateString()}</Text>
+        <Text style={[styles.label, {color: theme.inputLabel}]}>Date:</Text>
+        <TouchableOpacity
+          style={[
+            styles.datePicker,
+            {
+              backgroundColor: theme.textInputBackground,
+              color: theme.inputText,
+
+              placeholderTextColor: theme.inputText,
+            },
+          ]}
+          onPress={showDatePicker}>
+          <Icon name="calendar-outline" size={20} color={theme.inputText} />
+          <Text style={[styles.dateText, {color: theme.inputText}]}>
+            {date.toLocaleDateString()}
+          </Text>
         </TouchableOpacity>
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
@@ -151,22 +179,33 @@ const CreateNotice = () => {
           onCancel={hideDatePicker}
         />
 
-        <Text style={styles.label}>PDF File:</Text>
-        <TouchableOpacity style={styles.pdfPicker} onPress={handlePickPdf}>
-          <Icon name="document-attach-outline" size={20} color="#007AFF" />
-          <Text style={styles.pdfText}>
+        <Text style={[styles.label, {color: theme.inputLabel}]}>PDF File:</Text>
+        <TouchableOpacity
+          style={[
+            styles.pdfPicker,
+            {backgroundColor: theme.textInputBackground},
+          ]}
+          onPress={handlePickPdf}>
+          <Icon
+            name="document-attach-outline"
+            size={20}
+            color={theme.inputText}
+          />
+          <Text style={[styles.pdfText, {color: theme.inputText}]}>
             {pdf ? pdf.name : 'Pick a PDF file'}
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.submitButton}
+          style={[styles.submitButton, {backgroundColor: theme.button}]}
           onPress={handleSubmit}
           disabled={loading}>
           {loading ? (
             <ActivityIndicator color="#fff" />
           ) : (
-            <Text style={styles.submitButtonText}>Create Notice</Text>
+            <Text style={[styles.submitButtonText, {color: theme.buttonText}]}>
+              Create Notice
+            </Text>
           )}
         </TouchableOpacity>
       </View>
@@ -180,38 +219,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#F7F9FC',
   },
   label: {
     marginTop: 20,
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor: '#fff',
+
     padding: 12,
     borderRadius: 8,
     marginTop: 8,
     fontSize: 16,
-    color: '#000',
   },
   datePicker: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: '#fff',
+
     borderWidth: 1,
-    borderColor: '#ccc',
+
     padding: 12,
     borderRadius: 8,
     marginTop: 8,
   },
   dateText: {
     fontSize: 16,
-    color: '#000',
   },
   pdfPicker: {
     flexDirection: 'row',
@@ -219,24 +253,21 @@ const styles = StyleSheet.create({
     gap: 8,
     backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: '#ccc',
+
     padding: 12,
     borderRadius: 8,
     marginTop: 8,
   },
   pdfText: {
     fontSize: 16,
-    color: '#000',
   },
   submitButton: {
-    backgroundColor: '#007AFF',
     paddingVertical: 14,
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 30,
   },
   submitButtonText: {
-    color: '#fff',
     fontSize: 17,
     fontWeight: '600',
   },

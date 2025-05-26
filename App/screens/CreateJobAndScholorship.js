@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   Alert,
   ActivityIndicator,
@@ -16,9 +15,15 @@ import {Dropdown} from 'react-native-element-dropdown';
 import api from '../utils/api';
 import URL from '../assets/constant/url';
 import NavBar from '../assets/component/NavBar';
+import {lightTheme, darkTheme} from '../assets/constant/themes';
+import CustomModal from '../assets/component/CoustomModal';
+import {useNavigation} from '@react-navigation/native';
 
 const CreateJobAndScholarship = () => {
-  const themes = useColorScheme();
+  const navigation = useNavigation();
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
+
   const [type, setType] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [title, setTitle] = useState('');
@@ -28,7 +33,16 @@ const CreateJobAndScholarship = () => {
   const [lastApplyDate, setLastApplyDate] = useState(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalType, setModalType] = useState('info');
+  const showModal = (title, message, type = 'info') => {
+    setModalTitle(title);
+    setModalMessage(message);
+    setModalType(type);
+    setModalVisible(true);
+  };
   const showDatePicker = () => setDatePickerVisibility(true);
   const hideDatePicker = () => setDatePickerVisibility(false);
   const handleConfirmDate = selectedDate => {
@@ -61,11 +75,15 @@ const CreateJobAndScholarship = () => {
         eligibility,
       };
 
-      const response = await api.post(URL.jobAndScholarship.url, noticeData, {
+      await api.post(URL.jobAndScholarship.url, noticeData, {
         headers: {'Content-Type': 'application/json'},
       });
 
-      Alert.alert('Success', 'Notice uploaded successfully!');
+      showModal(
+        'Success',
+        'Job/Scholarship notice created successfully',
+        'success',
+      );
       setType('');
       setCompanyName('');
       setTitle('');
@@ -74,10 +92,10 @@ const CreateJobAndScholarship = () => {
       setApplyLink('');
       setLastApplyDate(new Date());
     } catch (error) {
-      console.error(error);
-      Alert.alert(
-        'Upload Failed',
+      showModal(
+        'Error',
         error?.response?.data?.message || 'Error uploading notice',
+        'error',
       );
     } finally {
       setLoading(false);
@@ -85,16 +103,15 @@ const CreateJobAndScholarship = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: theme.background}}>
       <NavBar
         data={{
           backButton: true,
-          currentThemes: themes,
           headingText: 'Create Job/Scholarship',
         }}
       />
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <Text style={[styles.label, {marginTop: 0}]}>Type</Text>
+      <ScrollView style={[styles.container]}>
+        <Text style={[styles.label, {color: theme.inputLabel}]}>Type</Text>
         <Dropdown
           data={[
             {label: 'Scholarship', value: 'scholarship'},
@@ -105,60 +122,129 @@ const CreateJobAndScholarship = () => {
           labelField="label"
           valueField="value"
           placeholder="Select Type"
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholder}
-          selectedTextStyle={styles.selectedText}
+          containerStyle={{
+            backgroundColor: theme.textInputBackground,
+            borderRadius: 8,
+          }}
+          itemTextStyle={{color: theme.inputText}}
+          itemContainerStyle={{
+            borderRadius: 8,
+          }}
+          activeColor={'#45ff4e'}
+          style={[
+            styles.dropdown,
+            {
+              backgroundColor: theme.textInputBackground,
+              borderColor: theme.border,
+            },
+          ]}
+          placeholderStyle={{
+            color: 'black',
+            backgroundColor: theme.textInputBackground,
+          }}
+          selectedTextStyle={{color: theme.inputText}}
         />
 
-        <Text style={styles.label}>Company Name</Text>
+        <Text style={[styles.label, {color: theme.inputLabel}]}>
+          Company Name
+        </Text>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            {
+              backgroundColor: theme.textInputBackground,
+              color: theme.inputText,
+              borderColor: theme.border,
+            },
+          ]}
           value={companyName}
           onChangeText={setCompanyName}
           placeholder="Enter company name"
-          placeholderTextColor="#999"
+          placeholderTextColor={theme.inputText}
         />
 
-        <Text style={styles.label}>Title</Text>
+        <Text style={[styles.label, {color: theme.inputLabel}]}>Title</Text>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            {
+              backgroundColor: theme.textInputBackground,
+              color: theme.inputText,
+              borderColor: theme.border,
+            },
+          ]}
           value={title}
           onChangeText={setTitle}
           placeholder="Enter job/scholarship title"
-          placeholderTextColor="#999"
+          placeholderTextColor={theme.inputText}
         />
 
-        <Text style={styles.label}>Description</Text>
+        <Text style={[styles.label, {color: theme.inputLabel}]}>
+          Description
+        </Text>
         <TextInput
-          style={[styles.input, styles.textArea]}
+          style={[
+            styles.input,
+            styles.textArea,
+            {
+              backgroundColor: theme.textInputBackground,
+              color: theme.inputText,
+              borderColor: theme.border,
+            },
+          ]}
           value={description}
           onChangeText={setDescription}
           placeholder="Enter description"
-          placeholderTextColor="#999"
+          placeholderTextColor={theme.inputText}
           multiline
         />
 
-        <Text style={styles.label}>Eligibility</Text>
+        <Text style={[styles.label, {color: theme.inputLabel}]}>
+          Eligibility
+        </Text>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            {
+              backgroundColor: theme.textInputBackground,
+              color: theme.inputText,
+              borderColor: theme.border,
+            },
+          ]}
           value={eligibility}
           onChangeText={setEligibility}
           placeholder="Enter eligibility"
-          placeholderTextColor="#999"
+          placeholderTextColor={theme.inputText}
         />
 
-        <Text style={styles.label}>Apply Link</Text>
+        <Text style={[styles.label, {color: theme.inputLabel}]}>
+          Apply Link
+        </Text>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            {
+              backgroundColor: theme.textInputBackground,
+              color: theme.inputText,
+              borderColor: theme.border,
+            },
+          ]}
           value={applyLink}
           onChangeText={setApplyLink}
           placeholder="Enter apply link"
-          placeholderTextColor="#999"
+          placeholderTextColor={theme.inputText}
         />
 
-        <Text style={styles.label}>Last Apply Date</Text>
-        <TouchableOpacity onPress={showDatePicker} style={styles.datePicker}>
-          <Text style={styles.dateText}>
+        <Text style={[styles.label, {color: theme.inputLabel}]}>
+          Last Apply Date
+        </Text>
+        <TouchableOpacity
+          onPress={showDatePicker}
+          style={[
+            styles.datePicker,
+            {backgroundColor: theme.textInputBackground},
+          ]}>
+          <Text style={[styles.dateText, {color: theme.inputText}]}>
             {lastApplyDate.toLocaleDateString()}
           </Text>
         </TouchableOpacity>
@@ -172,13 +258,30 @@ const CreateJobAndScholarship = () => {
 
         <View style={styles.buttonContainer}>
           {loading ? (
-            <ActivityIndicator size="large" color="#4CAF50" />
+            <ActivityIndicator size="large" color={theme.button} />
           ) : (
-            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-              <Text style={styles.buttonText}>Create Notice</Text>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                {backgroundColor: theme.button, marginBottom: 20},
+              ]}
+              onPress={handleSubmit}>
+              <Text style={[styles.buttonText, {color: theme.buttonText}]}>
+                Create Notice
+              </Text>
             </TouchableOpacity>
           )}
         </View>
+        <CustomModal
+          visible={modalVisible}
+          onClose={() => {
+            setModalVisible(false);
+            navigation.navigate('ScholarshipAndJob');
+          }}
+          title={modalTitle}
+          message={modalMessage}
+          type={modalType}
+        />
       </ScrollView>
     </View>
   );
@@ -190,78 +293,50 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#F7F8FA',
   },
   label: {
     marginTop: 15,
     fontSize: 16,
-    color: '#333',
     fontWeight: '600',
   },
   input: {
-    backgroundColor: '#fff',
     padding: 12,
     borderRadius: 8,
     marginTop: 8,
     borderWidth: 1,
-    borderColor: '#ddd',
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 1,
+    fontSize: 16,
   },
   textArea: {
     height: 100,
     textAlignVertical: 'top',
   },
   dropdown: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    marginTop: 8,
-    paddingHorizontal: 12,
     borderWidth: 1,
-    borderColor: '#ddd',
-    height: 50,
-    justifyContent: 'center',
-  },
-  placeholder: {
-    color: '#999',
-  },
-  selectedText: {
-    color: '#333',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    marginTop: 8,
   },
   datePicker: {
-    backgroundColor: '#fff',
     padding: 12,
     borderRadius: 8,
     marginTop: 8,
     borderWidth: 1,
-    borderColor: '#ddd',
   },
   dateText: {
     fontSize: 16,
-    color: '#333',
   },
   buttonContainer: {
     marginTop: 30,
-    alignItems: 'center',
-    marginBottom: 50,
+    marginBottom: 20,
   },
   button: {
-    backgroundColor: '#4CAF50',
     paddingVertical: 14,
-    paddingHorizontal: 30,
-    borderRadius: 8,
-    width: '100%',
+    borderRadius: 10,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 17,
+    fontWeight: '600',
   },
 });

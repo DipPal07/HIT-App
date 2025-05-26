@@ -6,42 +6,43 @@ import Button from '../assets/component/Button';
 import DocumentPicker from 'react-native-document-picker';
 import api from '../utils/api';
 import URL from '../assets/constant/url';
-import CustomModal from '../assets/component/CoustomModal';
 import {UserRole} from '../assets/constant/userConstant';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomModal from '../assets/component/CoustomModal';
+import {darkTheme, lightTheme} from '../assets/constant/themes';
 
 const Syllabus = ({navigation}) => {
-  const themes = useColorScheme();
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
 
   const [userType, setUserType] = useState(UserRole.NOTLOGIN);
   const [dropDownData, setDropSownData] = useState();
 
-  // Modal States
+  // ✅ Modal States
   const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalMessage, setModalMessage] = useState('');
-  const [modalType, setModalType] = useState('info'); // 'success', 'error', etc.
+  const [modalType, setModalType] = useState('info');
 
   const dropdownListDataHandel = data => {
-    console.log('Selected Course:', data);
     setDropSownData(data);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userRole = await AsyncStorage.getItem('role');
-        if (userRole) {
-          setUserType(userRole);
-        }
-        console.log(userRole);
+        if (userRole) setUserType(userRole);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
     };
     fetchData();
   }, []);
+
   const buttonHandel = () => {
     if (!dropDownData) {
-      showModal('Warning', 'Please select a course', 'error');
+      showModal('Warning', 'Please select a course', 'warning');
       return;
     }
 
@@ -49,8 +50,6 @@ const Syllabus = ({navigation}) => {
       data: dropDownData,
       uri: URL.getSyllabus.url,
     });
-
-    console.log('Navigated to SeePdf with:', dropDownData);
   };
 
   const showModal = (title, message, type = 'info') => {
@@ -62,7 +61,7 @@ const Syllabus = ({navigation}) => {
 
   const handleUpload = async () => {
     if (!dropDownData) {
-      showModal('Warning', 'Please select a course before uploading.', 'error');
+      showModal('Error', 'Please select a course before uploading.', 'error');
       return;
     }
 
@@ -91,6 +90,7 @@ const Syllabus = ({navigation}) => {
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         console.log('User cancelled the picker');
+
         return;
       }
 
@@ -117,12 +117,15 @@ const Syllabus = ({navigation}) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../assets/backgroundImage/2.jpg')}
+        source={
+          colorScheme == 'light'
+            ? require('../assets/backgroundImage/2.jpg')
+            : require('../assets/backgroundImage/image.png')
+        }
         style={styles.background}>
         <NavBar
           data={{
             backButton: true,
-            currentThemes: themes,
             headingText: 'Syllabus',
           }}
         />
@@ -140,13 +143,13 @@ const Syllabus = ({navigation}) => {
         </View>
       </ImageBackground>
 
-      {/* ✅ Custom Modal for status display */}
+      {/* ✅ Custom Modal usage */}
       <CustomModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         title={modalTitle}
         message={modalMessage}
-        type={modalType} // success / error / warning / info
+        type={modalType}
       />
     </View>
   );

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, useColorScheme, View} from 'react-native';
 import Pdf from 'react-native-pdf';
 
 import NavBar from '../assets/component/NavBar';
@@ -10,8 +10,11 @@ import LoadingComponent from '../assets/component/LoadingComponent';
 import NetworkIssue from '../assets/component/NetworkIssue';
 import ServerError from '../assets/component/ServerError';
 import DataNotFound from '../assets/component/DataNotFound';
+import {darkTheme, lightTheme} from '../assets/constant/themes';
 
 export default function SeePdf({route}) {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
   const [pdfUri, setPdfUri] = useState('');
   const [loading, setLoading] = useState(true);
   const [errorType, setErrorType] = useState(null); // null | 'network' | 'server' | 'notFound'
@@ -75,17 +78,22 @@ export default function SeePdf({route}) {
         onPressLink={uri => {
           console.log(`Link pressed: ${uri}`);
         }}
-        style={styles.pdf}
+        style={[styles.pdf, {backgroundColor: theme.background}]}
       />
     );
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: theme.background,
+        },
+      ]}>
       <NavBar
         data={{
           backButton: true,
-          currentThemes: 'light',
           headingText: 'See Pdf',
         }}
       />

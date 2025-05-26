@@ -159,10 +159,7 @@ const StackNavigation = () => {
         <Drawer.Screen name="ClassTimeTable" component={ClassTimeTable} />
         <Drawer.Screen name="Syllabus" component={Syllabus} />
         <Drawer.Screen name="ScholarshipAndJob" component={ScholarshipAndJob} />
-        <Drawer.Screen
-          name="StudentsCreativity"
-          component={StudentsCreativity}
-        />
+        <Drawer.Screen name="StudentsCreativity" component={ComingSoon} />
         <Drawer.Screen name="NoticeBoard" component={NoticeBoard} />
         <Drawer.Screen name="ReportCard" component={ReportCard} />
         <Drawer.Screen name="login" component={LoginScreen} />

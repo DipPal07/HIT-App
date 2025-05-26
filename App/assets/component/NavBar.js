@@ -8,16 +8,16 @@ import {
 } from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-
+import {darkTheme, lightTheme} from '../constant/themes';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 const NavBar = props => {
-  const themes = props.data.currentThemes;
+  // const theme = props.data.currenttheme;
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
+
   const navigation = useNavigation();
   return (
-    <View
-      style={[
-        styles.navBarContiner,
-        {backgroundColor: themes == 'dark' ? '#202020' : '#F1F1F1'},
-      ]}>
+    <View style={[styles.navBarContiner, {backgroundColor: theme.background}]}>
       <View
         style={[
           styles.navBarAlign,
@@ -41,20 +41,20 @@ const NavBar = props => {
       </View>
       <View
         style={[
-          {backgroundColor: themes == 'dark' ? '#682F2F' : '#d5ffe7'},
+          {backgroundColor: colorScheme == 'dark' ? '#682F2F' : '#d5ffe7'},
           {borderRadius: 20, flex: 2},
         ]}>
         <Text
           style={[
             styles.mainText,
-            {color: themes == 'dark' ? '#F1F1F1' : '#1B3058'},
+            {color: colorScheme == 'dark' ? '#F1F1F1' : '#1B3058'},
           ]}>
           {props.data.headingText}
         </Text>
         <Text
           style={[
             styles.tagLine,
-            {color: themes == 'dark' ? '#F1F1F1' : '#1B3058'},
+            {color: colorScheme == 'dark' ? '#F1F1F1' : '#1B3058'},
           ]}>
           Jnanam Vijnanam Sahitam
         </Text>
@@ -75,10 +75,11 @@ const NavBar = props => {
               navigation.navigate('Home');
               console.log('dip');
             }}>
-            <Image
+            {/* <Image
               style={{height: 35, width: 35}}
               source={require('../logo/home.png')}
-            />
+            /> */}
+            <Ionicons size={24} name="home-outline" color={theme.text} />
           </TouchableOpacity>
         ) : null}
       </View>

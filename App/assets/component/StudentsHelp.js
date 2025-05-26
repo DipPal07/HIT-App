@@ -9,19 +9,21 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import {darkTheme, lightTheme} from '../constant/themes';
 
 const StudentsHelp = ({navigation}) => {
-  const themes = useColorScheme();
-  console.log(themes);
-  const textColor = themes == 'dark' ? '#F1F1F1' : '#202020';
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
 
   return (
     <View>
-      <Text style={[styles.headingText, {color: textColor}]}>Student Help</Text>
+      <Text style={[styles.headingText, {color: theme.text}]}>
+        Student Help
+      </Text>
       <View
         style={{
           paddingTop: 5,
-          backgroundColor: '#FFF4F4',
+          backgroundColor: theme.primary,
           margin: 10,
           borderRadius: 20,
           elevation: 10,
@@ -39,7 +41,7 @@ const StudentsHelp = ({navigation}) => {
               source={require('../logo/schedule.png')}
               style={styles.icon}
             />
-            <Text style={[styles.text, {color: textColor}]}>
+            <Text style={[styles.text, {color: theme.text}]}>
               Class Time Table
             </Text>
           </TouchableOpacity>
@@ -55,7 +57,7 @@ const StudentsHelp = ({navigation}) => {
               source={require('../logo/syllabus.png')}
               style={styles.icon}
             />
-            <Text style={[styles.text, {color: textColor}]}>Syllabus</Text>
+            <Text style={[styles.text, {color: theme.text}]}>Syllabus</Text>
           </TouchableOpacity>
           {/* </View> */}
           {/* <View
@@ -69,17 +71,17 @@ const StudentsHelp = ({navigation}) => {
               source={require('../logo/website.png')}
               style={styles.icon}
             />
-            <Text style={[styles.text, {color: textColor}]}>Our Website</Text>
+            <Text style={[styles.text, {color: theme.text}]}>Our Website</Text>
           </TouchableOpacity>
           {/* </View> */}
           {/* <View style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}> */}
           <TouchableOpacity
             style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}
             onPress={() => {
-              navigation.navigate('NoticeBoard', {themes: themes});
+              navigation.navigate('NoticeBoard');
             }}>
             <Image source={require('../logo/Notice.png')} style={styles.icon} />
-            <Text style={[styles.text, {color: textColor}]}>Notice Board</Text>
+            <Text style={[styles.text, {color: theme.text}]}>Notice Board</Text>
           </TouchableOpacity>
           {/* </View> */}
         </View>
@@ -89,10 +91,10 @@ const StudentsHelp = ({navigation}) => {
           <TouchableOpacity
             style={[styles.imageAndTextContainer, {alignItems: 'flex-start'}]}
             onPress={() => {
-              navigation.navigate('ScholarshipAndJob', {themes: themes});
+              navigation.navigate('ScholarshipAndJob');
             }}>
             <Image source={require('../logo/job.png')} style={styles.icon} />
-            <Text style={[styles.text, {color: textColor}]}>
+            <Text style={[styles.text, {color: theme.text}]}>
               Scholarship & Job
             </Text>
           </TouchableOpacity>
@@ -103,14 +105,13 @@ const StudentsHelp = ({navigation}) => {
             onPress={() => {
               navigation.navigate('ComingSoon', {
                 navName: 'Students Creativity',
-                themes: themes,
               });
             }}>
             <Image
               source={require('../logo/Creativity.png')}
               style={styles.icon}
             />
-            <Text style={[styles.text, {color: textColor}]}>
+            <Text style={[styles.text, {color: theme.text}]}>
               Students Creativity
             </Text>
           </TouchableOpacity>
@@ -121,10 +122,10 @@ const StudentsHelp = ({navigation}) => {
             style={[styles.imageAndTextContainer, {alignItems: 'flex-end'}]}
             onPress={() => {
               // Linking.openURL('https://srisriuniversity.edu.in/result/');
-              navigation.navigate('ReportCard', {themes: themes});
+              navigation.navigate('ReportCard');
             }}>
             <Image source={require('../logo/result.png')} style={styles.icon} />
-            <Text style={[styles.text, {color: textColor}]}>Report Card</Text>
+            <Text style={[styles.text, {color: theme.text}]}>Report Card</Text>
           </TouchableOpacity>
           {/* </View> */}
           {/* <View
@@ -134,14 +135,13 @@ const StudentsHelp = ({navigation}) => {
             onPress={() => {
               navigation.navigate('ComingSoon', {
                 navName: 'Students Creativity',
-                themes: themes,
               });
             }}>
             <Image
               source={require('../logo/library.png')}
               style={styles.icon}
             />
-            <Text style={[styles.text, {color: textColor}]}>
+            <Text style={[styles.text, {color: theme.text}]}>
               Library Information
             </Text>
           </TouchableOpacity>

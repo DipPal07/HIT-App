@@ -4,14 +4,18 @@ import {
   Dimensions,
   StyleSheet,
   Text,
+  useColorScheme,
   View,
 } from 'react-native';
 import Pdf from 'react-native-pdf';
 import NavBar from '../assets/component/NavBar';
 import URL from '../assets/constant/url';
 import {logout} from '../utils/api';
+import {darkTheme, lightTheme} from '../assets/constant/themes';
 
 export default function ShowPdfFullViewMode({route}) {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
   const [pdfUri, setPdfUri] = useState('');
   const [error, setError] = useState(false);
   const {uri} = route.params;
@@ -28,7 +32,6 @@ export default function ShowPdfFullViewMode({route}) {
       <NavBar
         data={{
           backButton: true,
-          currentThemes: 'light',
           headingText: 'Notice',
         }}
       />
@@ -55,7 +58,12 @@ export default function ShowPdfFullViewMode({route}) {
           onPressLink={uri => {
             console.log(`Link pressed: ${uri}`);
           }}
-          style={styles.pdf}
+          style={[
+            styles.pdf,
+            {
+              backgroundColor: theme.background,
+            },
+          ]}
         />
       )}
     </View>

@@ -7,10 +7,14 @@ import {
   Modal,
   FlatList,
   Button,
+  useColorScheme,
 } from 'react-native';
 import facultyData from './FacultyData';
+import {darkTheme, lightTheme} from '../constant/themes';
 
 const DropdownSelectList = props => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
   const [selectedCourseType, setSelectedCourseType] = useState(
     'Select your course type',
   );
@@ -42,7 +46,10 @@ const DropdownSelectList = props => {
   return (
     <View style={{marginTop: 10}}>
       <TouchableOpacity
-        style={styles.dropDownStyle}
+        style={[
+          styles.dropDownStyle,
+          {backgroundColor: theme.textInputBackground},
+        ]}
         onPress={() => {
           setIsClicked(!isClicked);
           setIsClickedCourse(false);
@@ -51,7 +58,11 @@ const DropdownSelectList = props => {
         <Text style={styles.placeholderText}>{selectedCourseType}</Text>
       </TouchableOpacity>
       {isClicked ? (
-        <View style={styles.dropDownArea}>
+        <View
+          style={[
+            styles.dropDownArea,
+            {backgroundColor: theme.textInputBackground},
+          ]}>
           <FlatList
             data={facultyData}
             renderItem={(item, index) => {
@@ -62,7 +73,7 @@ const DropdownSelectList = props => {
                     facultiesFunction(item);
                     // console.log(courseData);
                   }}>
-                  <Text style={styles.placeholderText}>
+                  <Text style={[styles.placeholderText, {color: theme.text}]}>
                     {item.item.courseType}
                   </Text>
                 </TouchableOpacity>
@@ -73,7 +84,10 @@ const DropdownSelectList = props => {
       ) : null}
       {/* next drop down */}
       <TouchableOpacity
-        style={styles.dropDownStyle}
+        style={[
+          styles.dropDownStyle,
+          {backgroundColor: theme.textInputBackground},
+        ]}
         onPress={() => {
           setIsClickedCourse(!isClickedCourse);
           setIsClickedSemester(false);
@@ -84,7 +98,11 @@ const DropdownSelectList = props => {
         </Text>
       </TouchableOpacity>
       {isClickedCourse ? (
-        <View style={styles.dropDownArea}>
+        <View
+          style={[
+            styles.dropDownArea,
+            {backgroundColor: theme.textInputBackground},
+          ]}>
           {!courseData ? (
             <Text
               style={{
@@ -92,6 +110,7 @@ const DropdownSelectList = props => {
                 fontSize: 15,
                 color: 'red',
                 paddingTop: 30,
+                color: theme.text,
               }}>
               Please select course type first
             </Text>
@@ -106,7 +125,7 @@ const DropdownSelectList = props => {
                     onPress={() => {
                       courseFunction(item);
                     }}>
-                    <Text style={styles.placeholderText}>
+                    <Text style={[styles.placeholderText, {color: theme.text}]}>
                       {item.item.courseName}
                     </Text>
                   </TouchableOpacity>
@@ -118,7 +137,10 @@ const DropdownSelectList = props => {
       ) : null}
       {/* semester drop down */}
       <TouchableOpacity
-        style={styles.dropDownStyle}
+        style={[
+          styles.dropDownStyle,
+          {backgroundColor: theme.textInputBackground},
+        ]}
         onPress={() => {
           setIsClickedSemester(!isClickedSemester);
           setIsClickedCourse(false);
@@ -129,7 +151,11 @@ const DropdownSelectList = props => {
         </Text>
       </TouchableOpacity>
       {isClickedSemester ? (
-        <View style={styles.dropDownArea}>
+        <View
+          style={[
+            styles.dropDownArea,
+            {backgroundColor: theme.textInputBackground},
+          ]}>
           {!semesterData ? (
             <Text
               style={{
@@ -183,8 +209,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     marginBottom: 15,
-    elevation: 5,
-    backgroundColor: 'white',
+
+    // elevation: 5,
   },
   placeholderText: {
     fontSize: 20,
@@ -200,7 +226,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 10,
     elevation: 5,
-    backgroundColor: 'white',
 
     marginBottom: 10,
   },
