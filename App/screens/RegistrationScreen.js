@@ -68,9 +68,7 @@ const RegistrationScreen = () => {
     setModalType(type);
     setModalVisible(true);
   };
-  useEffect(() => {
-    showModal('Error', 'you have already registered', 'error');
-  }, []);
+
   const handleChange = (field, value) => {
     setForm(prev => ({...prev, [field]: value}));
   };

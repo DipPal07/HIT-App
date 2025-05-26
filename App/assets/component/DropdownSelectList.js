@@ -12,7 +12,7 @@ import facultyData from './FacultyData';
 
 const DropdownSelectList = props => {
   const [selectedCourseType, setSelectedCourseType] = useState(
-    'Select your faculty name',
+    'Select your course type',
   );
   const [isClicked, setIsClicked] = useState(false);
   const [selectedCourse, setSelectedCourseName] = useState();
@@ -93,7 +93,7 @@ const DropdownSelectList = props => {
                 color: 'red',
                 paddingTop: 30,
               }}>
-              Please select faculty first
+              Please select course type first
             </Text>
           ) : (
             <FlatList

@@ -107,43 +107,44 @@ const LoginScreen = () => {
           headingText: 'HIT',
         }}
       />
-
-      {/* Custom Modal */}
-      <CustomModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        title={modalTitle}
-        message={modalMessage}
-        type={modalType}
-      />
-
-      <View>
-        <Text style={styles.heading}>Login</Text>
-
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          keyboardType="email-address"
-          value={form.email}
-          onChangeText={text => handleChange('email', text)}
+      <View style={{padding: 20}}>
+        {/* Custom Modal */}
+        <CustomModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          title={modalTitle}
+          message={modalMessage}
+          type={modalType}
         />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          secureTextEntry
-          value={form.password}
-          onChangeText={text => handleChange('password', text)}
-        />
+        <View>
+          <Text style={styles.heading}>Login</Text>
 
-        <View style={styles.buttonContainer}>
-          {loading ? (
-            <ActivityIndicator size="large" color="#4CAF50" />
-          ) : (
-            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-              <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-          )}
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            keyboardType="email-address"
+            value={form.email}
+            onChangeText={text => handleChange('email', text)}
+          />
+
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            secureTextEntry
+            value={form.password}
+            onChangeText={text => handleChange('password', text)}
+          />
+
+          <View style={styles.buttonContainer}>
+            {loading ? (
+              <ActivityIndicator size="large" color="#4CAF50" />
+            ) : (
+              <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                <Text style={styles.buttonText}>Login</Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -154,7 +155,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f4f4f4',
     paddingTop: 0,
-    padding: 20,
     flexGrow: 1,
   },
   heading: {

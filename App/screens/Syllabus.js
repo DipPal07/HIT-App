@@ -1,5 +1,5 @@
 import {ImageBackground, StyleSheet, useColorScheme, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DropdownSelectList from '../assets/component/DropdownSelectList';
 import NavBar from '../assets/component/NavBar';
 import Button from '../assets/component/Button';
@@ -7,9 +7,12 @@ import DocumentPicker from 'react-native-document-picker';
 import api from '../utils/api';
 import URL from '../assets/constant/url';
 import CustomModal from '../assets/component/CoustomModal';
+import {UserRole} from '../assets/constant/userConstant';
 
 const Syllabus = ({navigation}) => {
   const themes = useColorScheme();
+
+  const [userType, setUserType] = useState(UserRole.NOTLOGIN);
   const [dropDownData, setDropSownData] = useState();
 
   // Modal States
@@ -22,7 +25,20 @@ const Syllabus = ({navigation}) => {
     console.log('Selected Course:', data);
     setDropSownData(data);
   };
-
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userRole = await AsyncStorage.getItem('role');
+        if (userRole) {
+          setUserType(userRole);
+        }
+        console.log(userRole);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    fetchData();
+  }, []);
   const buttonHandel = () => {
     if (!dropDownData) {
       showModal('Warning', 'Please select a course', 'error');
@@ -113,9 +129,14 @@ const Syllabus = ({navigation}) => {
         <View style={styles.contentWrapper}>
           <DropdownSelectList dropdowninfo={dropdownListDataHandel} />
           <Button data={{title: 'Search'}} onPress={buttonHandel} />
-          <View style={styles.uploadButtonWrapper}>
-            <Button data={{title: 'Upload Syllabus'}} onPress={handleUpload} />
-          </View>
+          {userType === UserRole.ADMIN && (
+            <View style={styles.uploadButtonWrapper}>
+              <Button
+                data={{title: 'Upload Syllabus'}}
+                onPress={handleUpload}
+              />
+            </View>
+          )}
         </View>
       </ImageBackground>
 
