@@ -20,6 +20,7 @@ export default function SeePdf({route}) {
   const [errorType, setErrorType] = useState(null); // null | 'network' | 'server' | 'notFound'
 
   const {data, uri} = route.params;
+
   const fetchPdf = async () => {
     try {
       setLoading(true);
@@ -33,6 +34,7 @@ export default function SeePdf({route}) {
       });
 
       const link = response?.data?.data?.link;
+      console.log(link);
 
       if (link) {
         setPdfUri(`${URL.baseUri}${link}`);

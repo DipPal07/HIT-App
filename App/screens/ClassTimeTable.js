@@ -59,6 +59,7 @@ const ClassTimeTable = ({navigation}) => {
       data: dropDownData,
       uri: URL.getClassRoutine.url,
     });
+    console.log(URL.getClassRoutine.url);
 
     console.log('Navigated to SeePdf with:', dropDownData);
   };

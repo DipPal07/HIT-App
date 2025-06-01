@@ -22,31 +22,43 @@ const Placement = () => {
       </Text>
       <ScrollView horizontal>
         <Image
-          source={require('../placementImage/1.png')}
+          source={require('../placementImage/placment_1.png')}
           style={styles.newsAndEventImage}
         />
         <Image
-          source={require('../placementImage/2.jpg')}
+          source={require('../placementImage/placment_2.jpg')}
           style={styles.newsAndEventImage}
         />
         <Image
-          source={require('../placementImage/3.jpg')}
+          source={require('../placementImage/placment_3.png')}
           style={styles.newsAndEventImage}
         />
         <Image
-          source={require('../placementImage/4.jpg')}
+          source={require('../placementImage/placment_4.jpg')}
           style={styles.newsAndEventImage}
         />
         <Image
-          source={require('../placementImage/5.jpg')}
+          source={require('../placementImage/placment_5.jpg')}
           style={styles.newsAndEventImage}
         />
         <Image
-          source={require('../placementImage/6.png')}
+          source={require('../placementImage/placment_6.jpg')}
           style={styles.newsAndEventImage}
         />
         <Image
-          source={require('../placementImage/13.jpg')}
+          source={require('../placementImage/placment_7.jpg')}
+          style={styles.newsAndEventImage}
+        />
+        <Image
+          source={require('../placementImage/placment_8.jpg')}
+          style={styles.newsAndEventImage}
+        />
+        <Image
+          source={require('../placementImage/placment_9.jpg')}
+          style={styles.newsAndEventImage}
+        />
+        <Image
+          source={require('../placementImage/placment_10.jpg')}
           style={styles.newsAndEventImage}
         />
       </ScrollView>

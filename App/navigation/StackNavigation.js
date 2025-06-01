@@ -2,7 +2,13 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-// Import all screens
+import {StyleSheet, Text, View, Linking, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AuthContext} from '../utils/AuthContext';
+import {UserRole} from '../assets/constant/userConstant';
+
+// Screens
 import Home from '../screens/Home';
 import ClassTimeTable from '../screens/ClassTimeTable';
 import Syllabus from '../screens/Syllabus';
@@ -13,22 +19,17 @@ import ReportCard from '../screens/ReportCard';
 import SeePdf from '../screens/SeePdf';
 import RegistrationScreen from '../screens/RegistrationScreen';
 import LoginScreen from '../screens/LoginScreen';
-import {StyleSheet, Text, View} from 'react-native';
-import Testing from '../assets/component/Testing';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-import {AuthContext} from '../utils/AuthContext';
-import {UserRole} from '../assets/constant/userConstant';
 import ShowPdfFullViewMode from '../screens/ShowPdfFullViewMode';
 import CreateNotice from '../screens/CreateNotice';
 import CreateJobAndScholarship from '../screens/CreateJobAndScholorship';
 import ComingSoon from '../screens/ComingSoon';
+import ForgotPassword from '../screens/ForgotPassword';
 
-// Create navigators
+// Navigators
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
+// Custom Drawer Content
 const CustomDrawerContent = props => {
   const [name, setName] = React.useState('HIT');
   const [role, setRole] = React.useState(UserRole.STUDENT);
@@ -60,6 +61,7 @@ const CustomDrawerContent = props => {
           {role || UserRole.STUDENT}
         </Text>
       </View>
+
       <View style={styles.drawerItems}>
         {props.state.routeNames.map(routeName => {
           if (
@@ -68,15 +70,6 @@ const CustomDrawerContent = props => {
           ) {
             return null;
           }
-
-          // if (
-          //   routeName !== 'login' &&
-          //   routeName !== 'registration' &&
-          //   !isLoggedIn
-          // ) {
-          //   return null;
-          // }
-
           return (
             <TouchableOpacity
               key={routeName}
@@ -87,87 +80,88 @@ const CustomDrawerContent = props => {
           );
         })}
       </View>
+
       {isLoggedIn && (
-        <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+        <TouchableOpacity onPress={handleLogout}>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       )}
+
+      <View style={styles.socialIcons}>
+        <TouchableOpacity
+          onPress={() =>
+            Linking.openURL(
+              'https://www.linkedin.com/school/haldia-institute-of-technology/',
+            )
+          }>
+          <Icon name="logo-linkedin" size={28} color="#ecf0f1" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => Linking.openURL('https://x.com/HIT_WB_OFFICIAL')}>
+          <Icon name="logo-twitter" size={28} color="#ecf0f1" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
-// Stack Navigator for deeper navigation
-const MainStack = () => {
-  return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="ClassTimeTable" component={ClassTimeTable} />
-      <Stack.Screen name="Syllabus" component={Syllabus} />
-      <Stack.Screen name="ScholarshipAndJob" component={ScholarshipAndJob} />
-      <Stack.Screen name="StudentsCreativity" component={StudentsCreativity} />
-      <Stack.Screen name="NoticeBoard" component={NoticeBoard} />
-      <Stack.Screen name="ReportCard" component={ReportCard} />
-      <Stack.Screen name="SeePdf" component={SeePdf} />
-      <Stack.Screen name="CreateNotice" component={CreateNotice} />
-      <Stack.Screen
-        name="CreateJobAndScholarship"
-        component={CreateJobAndScholarship}
-      />
-      <Stack.Screen
-        name="ShowPdfFullViewMode"
-        component={ShowPdfFullViewMode}
-      />
-      <Stack.Screen name="ComingSoon" component={ComingSoon} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-    </Stack.Navigator>
-  );
-};
+// Main Stack
+const MainStack = () => (
+  <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Screen name="Home" component={Home} />
+    <Stack.Screen name="ClassTimeTable" component={ClassTimeTable} />
+    <Stack.Screen name="Syllabus" component={Syllabus} />
+    <Stack.Screen name="ScholarshipAndJob" component={ScholarshipAndJob} />
+    <Stack.Screen name="StudentsCreativity" component={StudentsCreativity} />
+    <Stack.Screen name="NoticeBoard" component={NoticeBoard} />
+    <Stack.Screen name="ReportCard" component={ReportCard} />
+    <Stack.Screen name="SeePdf" component={SeePdf} />
+    <Stack.Screen name="CreateNotice" component={CreateNotice} />
+    <Stack.Screen
+      name="CreateJobAndScholarship"
+      component={CreateJobAndScholarship}
+    />
+    <Stack.Screen name="ShowPdfFullViewMode" component={ShowPdfFullViewMode} />
+    <Stack.Screen name="ComingSoon" component={ComingSoon} />
+    <Stack.Screen name="Login" component={LoginScreen} />
+    <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+  </Stack.Navigator>
+);
 
-const StackNavigation = () => {
-  return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerShown: false,
-          drawerStyle: {
-            backgroundColor: '#2c3e50', // Dark background for the drawer
-            width: 240, // Adjust the width of the drawer
-          },
-          drawerLabelStyle: {
-            fontSize: 16,
-            color: '#ecf0f1', // Light text color for readability
-            fontWeight: 'bold', // Make the text bold
-          },
-          drawerActiveTintColor: '#4CAF50', // Active screen highlight color
-          drawerInactiveTintColor: '#ecf0f1', // Inactive screen color
-        }}
-        drawerContent={props => <CustomDrawerContent {...props} />} // Use custom drawer content
-      >
-        <Drawer.Screen
-          name="Dashboard"
-          component={MainStack}
-          options={{
-            drawerIcon: () => (
-              <View
-                style={{height: '10px', width: '10px', backgroundColor: 'red'}}>
-                <Text>x</Text>
-              </View>
-            ),
-          }}
-        />
-        <Drawer.Screen name="ClassTimeTable" component={ClassTimeTable} />
-        <Drawer.Screen name="Syllabus" component={Syllabus} />
-        <Drawer.Screen name="ScholarshipAndJob" component={ScholarshipAndJob} />
-        <Drawer.Screen name="StudentsCreativity" component={ComingSoon} />
-        <Drawer.Screen name="NoticeBoard" component={NoticeBoard} />
-        <Drawer.Screen name="ReportCard" component={ReportCard} />
-        <Drawer.Screen name="login" component={LoginScreen} />
-        <Drawer.Screen name="registration" component={RegistrationScreen} />
-      </Drawer.Navigator>
-    </NavigationContainer>
-  );
-};
+// Drawer Navigation
+const StackNavigation = () => (
+  <NavigationContainer>
+    <Drawer.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: false,
+        drawerStyle: {
+          backgroundColor: '#2c3e50',
+          width: 240,
+        },
+        drawerLabelStyle: {
+          fontSize: 16,
+          color: '#ecf0f1',
+          fontWeight: 'bold',
+        },
+        drawerActiveTintColor: '#4CAF50',
+        drawerInactiveTintColor: '#ecf0f1',
+      }}
+      drawerContent={props => <CustomDrawerContent {...props} />}>
+      <Drawer.Screen name="Dashboard" component={MainStack} />
+      <Drawer.Screen name="ClassTimeTable" component={ClassTimeTable} />
+      <Drawer.Screen name="Syllabus" component={Syllabus} />
+      <Drawer.Screen name="ScholarshipAndJob" component={ScholarshipAndJob} />
+      <Drawer.Screen name="StudentsCreativity" component={ComingSoon} />
+      <Drawer.Screen name="NoticeBoard" component={NoticeBoard} />
+      <Drawer.Screen name="ReportCard" component={ReportCard} />
+      <Drawer.Screen name="login" component={LoginScreen} />
+      <Drawer.Screen name="registration" component={RegistrationScreen} />
+      <Drawer.Screen name="ForgotPassword" component={ForgotPassword} />
+    </Drawer.Navigator>
+  </NavigationContainer>
+);
+
 const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
@@ -200,5 +194,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 20,
   },
+  socialIcons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#7f8c8d',
+  },
 });
+
 export default StackNavigation;
